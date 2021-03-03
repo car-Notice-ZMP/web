@@ -2,8 +2,8 @@ import {Injectable, Injector} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 
-import {Sign_in} from '../_models/sign-in';
-import {Sign_up} from '../_models/sign_up';
+import {Login} from '../_models/Login';
+import {Register} from '../_models/Register';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -12,8 +12,8 @@ import {SocialAuthService} from 'angularx-social-login';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<Sign_in>;
-  public currentUser: Observable<Sign_in>;
+  private currentUserSubject: BehaviorSubject<Login>;
+  public currentUser: Observable<Login>;
 
 
   constructor(private http: HttpClient,
@@ -21,7 +21,7 @@ export class AuthenticationService {
               public dialog: MatDialog,
               private authService: SocialAuthService,
               private snackBar: MatSnackBar) {
-    this.currentUserSubject = new BehaviorSubject<Sign_in>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<Login>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -32,7 +32,7 @@ export class AuthenticationService {
     });
   }
 
-  SignUp(user: Sign_up): Subscription {
+  SignUp(user: Register): Subscription {
     return this.http.post('https://charades-with-friends-api.herokuapp.com/sign_up', user).subscribe(
       response => {
         this.openSnackBar('User registered successfully', '');
@@ -52,7 +52,7 @@ export class AuthenticationService {
 
   }
 
-  SignIn(user: Sign_in): Subscription {
+  SignIn(user: Login): Subscription {
     return this.http.post('https://charades-with-friends-api.herokuapp.com/sign_in', user).subscribe(
       response => {
         localStorage.setItem('socialLogin', 'false');
@@ -76,7 +76,7 @@ export class AuthenticationService {
     );
   }
 
-  QuietlySignUp(user: Sign_up): Subscription {
+  QuietlySignUp(user: Register): Subscription {
     return this.http.post('https://charades-with-friends-api.herokuapp.com/sign_up', user).subscribe(
       response => {
         console.log('User Signed Up');
@@ -92,7 +92,7 @@ export class AuthenticationService {
 
   }
 
-  QuietlySignIn(user: Sign_in): Subscription {
+  QuietlySignIn(user: Login): Subscription {
 
     return this.http.post('https://charades-with-friends-api.herokuapp.com/sign_in', user).subscribe(
       response => {
