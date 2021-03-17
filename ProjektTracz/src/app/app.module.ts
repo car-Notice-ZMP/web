@@ -1,24 +1,49 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
+import {AppRoutingModule, routingComponents} from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomeComponent } from './components/home/home.component';
-import { FacebookComponent } from './components/facebook/facebook.component';
+import {MaterialModule} from './material.module';
+import {FlexModule} from '@angular/flex-layout';
+import {FormsModule} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from 'angularx-social-login';
+import {AuthenticationService} from './_services/authentication.service';
+import {JwtInterceptor} from './_helpers/jwt.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    FacebookComponent
+    routingComponents
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule,
+    FlexModule,
+    FormsModule,
+    MatButtonModule,
+    HttpClientModule,
+    SocialLoginModule
   ],
-  providers: [],
+  providers: [
+    AuthenticationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }, {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [{
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider('1096940430460-ln1fkpm3muobqapvpbp0qnt094v0doll.apps.googleusercontent.com')
+        }]
+      } as SocialAuthServiceConfig
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

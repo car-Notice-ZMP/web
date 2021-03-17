@@ -1,19 +1,20 @@
 <html class="mat-app-background">
+<div fxLayoutAlign="end" fxLayoutGap="10px">
+  <div fxLayoutAlign="center center">
+    <mat-icon>wb_sunny</mat-icon>
+    <mat-slide-toggle [checked]="checked" (click)="setTheme()"></mat-slide-toggle>
+    <mat-icon>brightness_3</mat-icon>
+  </div>
+</div>
+
 <body fxFill class="mat-app-background" fxLayoutAlign="center center">
-<mat-tab-group>
-  <mat-tab label="First"> Content 1 </mat-tab>
-  <mat-tab label="Second"> Content 2 </mat-tab>
-  <mat-tab label="Third"> Content 3 </mat-tab>
-</mat-tab-group>
 
 <div fxLayoutAlign="center center" fxLayout="column">
   <br>
-    <div fxLayoutGap="2%" fxLayout="column">
-    </div>
+  <mat-card-content fxLayoutGap="15%" fxLayout="column">
     <div class="main-menu" fxLayoutGap="2%" fxLayout="column">
-      <!--<button mat-raised-button color="accent" (click)="signIn()">Zaloguj się</button>
-      <button mat-stroked-button color="accent" (click)="signUp()">Zarejestruj się</button>
-    --></div>
+    </div>
+  </mat-card-content>
 </div>
 </body>
 </html>
