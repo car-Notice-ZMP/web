@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
 import {ColorSchemeService} from '../../_services/color-scheme.service';
 import {AuthenticationService} from '../../_services/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   checked = false;
 
   constructor(private authenticationService: AuthenticationService,
-              public dialog: MatDialog,
+              public router: Router,
               private colorSchemeService: ColorSchemeService) {
     this.checkSlideToggle();
     this.colorSchemeService.load();
@@ -33,6 +33,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  openSignIn(): void {
+    this.router.navigate(['login']);
+  }
+
+  openSignUp(): void {
+    this.router.navigate(['register']);
+  }
 
   ngOnInit(): void {
   }

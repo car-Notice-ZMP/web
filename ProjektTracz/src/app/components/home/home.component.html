@@ -1,6 +1,13 @@
 <html class="mat-app-background">
+<mat-toolbar>
+  <span>Notice My Car</span>
+  <span class="spacer"></span>
+  <span><button mat-raised-button color="accent" (click)="openSignIn()">Sign In</button></span>
+  <span class="small-spacer"></span>
+  <span><button mat-raised-button color="accent" (click)="openSignUp()">Sign Up</button></span>
+</mat-toolbar>
 <div fxLayoutAlign="end" fxLayoutGap="10px">
-  <div fxLayoutAlign="center center">
+  <div fxLayoutAlign="center">
     <mat-icon>wb_sunny</mat-icon>
     <mat-slide-toggle [checked]="checked" (click)="setTheme()"></mat-slide-toggle>
     <mat-icon>brightness_3</mat-icon>
@@ -10,11 +17,7 @@
 <body fxFill class="mat-app-background" fxLayoutAlign="center center">
 
 <div fxLayoutAlign="center center" fxLayout="column">
-  <br>
-  <mat-card-content fxLayoutGap="15%" fxLayout="column">
-    <div class="main-menu" fxLayoutGap="2%" fxLayout="column">
-    </div>
-  </mat-card-content>
+    <img class="title" src="assets/Logo2.png" alt="Notice My Car">
 </div>
 </body>
 </html>

@@ -11,11 +11,15 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from 'angularx-social-login';
 import {AuthenticationService} from './_services/authentication.service';
 import {JwtInterceptor} from './_helpers/jwt.interceptor';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    routingComponents
+    routingComponents,
+    SignInComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
