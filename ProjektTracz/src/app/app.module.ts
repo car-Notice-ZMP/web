@@ -13,13 +13,15 @@ import {AuthenticationService} from './_services/authentication.service';
 import {JwtInterceptor} from './_helpers/jwt.interceptor';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { GoogleComponent } from './components/google/google.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    GoogleComponent
   ],
   imports: [
     BrowserModule,

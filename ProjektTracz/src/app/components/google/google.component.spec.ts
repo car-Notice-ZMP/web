@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FacebookComponent } from './facebook.component';
+import { GoogleComponent } from './google.component';
 
-describe('FacebookComponent', () => {
-  let component: FacebookComponent;
-  let fixture: ComponentFixture<FacebookComponent>;
+describe('GoogleComponent', () => {
+  let component: GoogleComponent;
+  let fixture: ComponentFixture<GoogleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FacebookComponent ]
+      declarations: [ GoogleComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FacebookComponent);
+    fixture = TestBed.createComponent(GoogleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
