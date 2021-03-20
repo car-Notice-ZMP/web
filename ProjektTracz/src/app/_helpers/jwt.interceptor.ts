@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import {HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
-import {AuthenticationService} from '../_services/authentication.service';
-
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor() { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token: string = localStorage.getItem('authToken');
