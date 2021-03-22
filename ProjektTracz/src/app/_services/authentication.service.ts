@@ -106,7 +106,7 @@ export class AuthenticationService {
         localStorage.setItem('authToken', response.data.user.authentication_token);
         // @ts-ignore
         localStorage.setItem('userID', response.data.user.id);
-        this.router.navigate(['p']);
+        this.router.navigate(['profile']);
       },
       error => {
         this.openSnackBar('Something went wrong', '');
