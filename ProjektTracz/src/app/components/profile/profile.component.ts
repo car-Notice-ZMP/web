@@ -16,6 +16,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   userID: string;
   user: string;
   private settingsSubscribe: Subscription;
+  checked = false;
 
   constructor(
     private socialService: SocialService,
@@ -23,9 +24,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private router: Router,
     private colorSchemeService: ColorSchemeService,
     private userSettingsService: UserSettingsService) {
+    this.checkSlideToggle();
+    this.colorSchemeService.load();
     this.user = localStorage.getItem('userID');
     localStorage.setItem('refreshed', 'false');
-    colorSchemeService.load();
     this.userSettingsService.get(this.userID);
     this.settingsSubscribe = this.userSettingsService.userObservable.subscribe(
       user => {
@@ -33,6 +35,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
       });
   }
 
+  checkSlideToggle(): void {
+    if (localStorage.getItem('prefers-color') === 'dark') {
+      this.checked = true;
+    }
+  }
+
+  setTheme(): void {
+    if (localStorage.getItem('prefers-color') === 'light') {
+      this.colorSchemeService.update('dark');
+    } else {
+      this.colorSchemeService.update('light');
+    }
+  }
 
   ngOnInit(): void {
     document.body.removeAttribute('.modal-open');
