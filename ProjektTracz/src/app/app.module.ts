@@ -50,7 +50,7 @@ import { SettingsComponent } from './components/settings/settings.component';
         autoLogin: false,
         providers: [{
           id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider('1096940430460-ln1fkpm3muobqapvpbp0qnt094v0doll.apps.googleusercontent.com')
+          provider: new GoogleLoginProvider('http://34.122.22.62:8080/api/google')
         }]
       } as SocialAuthServiceConfig
     }],

@@ -33,7 +33,7 @@ export class AuthenticationService {
   }
 
   SignUp(user: Register): Subscription {
-    return this.http.post('https://charades-with-friends-api.herokuapp.com/sign_up', user).subscribe(
+    return this.http.post('http://34.122.22.62:8080/api/auth/register', user).subscribe(
       response => {
         this.openSnackBar('User registered successfully', '');
         // @ts-ignore
@@ -53,7 +53,7 @@ export class AuthenticationService {
   }
 
   SignIn(user: Login): Subscription {
-    return this.http.post('https://charades-with-friends-api.herokuapp.com/sign_in', user).subscribe(
+    return this.http.post('http://34.122.22.62:8080/api/auth/login', user).subscribe(
       response => {
         localStorage.setItem('socialLogin', 'false');
         // @ts-ignore
@@ -77,7 +77,7 @@ export class AuthenticationService {
   }
 
   QuietlySignUp(user: Register): Subscription {
-    return this.http.post('https://charades-with-friends-api.herokuapp.com/sign_up', user).subscribe(
+    return this.http.post('http://34.122.22.62:8080/api/auth/register', user).subscribe(
       response => {
         console.log('User Signed Up');
         // @ts-ignore
@@ -94,7 +94,7 @@ export class AuthenticationService {
 
   QuietlySignIn(user: Login): Subscription {
 
-    return this.http.post('https://charades-with-friends-api.herokuapp.com/sign_in', user).subscribe(
+    return this.http.post('http://34.122.22.62:8080/api/auth/login', user).subscribe(
       response => {
         // @ts-ignore
         this.user = response.data.user;

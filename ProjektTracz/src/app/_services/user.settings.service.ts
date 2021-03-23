@@ -17,9 +17,7 @@ export class UserSettingsService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog
-  ) {
+    private snackBar: MatSnackBar) {
   }
 
   openSnackBar(message: string, action: string): void {
@@ -32,28 +30,8 @@ export class UserSettingsService {
     this.userSource.next(user);
   }
 
-  update(userID: string, user: any): void {
-    this.http.patch('https://charades-with-friends-api.herokuapp.com/user/' + userID, user).subscribe(
-      response => {
-        this.setUser(response as User);
-        console.log(response);
-        this.openSnackBar('Changed successfully', 'Close');
-      },
-      error => {
-        this.openSnackBar('Change failed', 'Close');
-      });
-  }
-
-  delete(userID: string): void {
-    this.http.delete('https://charades-with-friends-api.herokuapp.com/user/' + userID).subscribe(
-      response => {
-        this.router.navigate(['h']);
-        this.dialog.closeAll();
-      });
-  }
-
   get(userID: string): void {
-    this.http.get('https://charades-with-friends-api.herokuapp.com/user/' + userID).subscribe(
+    this.http.get('http://34.122.22.62:8080/api/auth/profile' + userID).subscribe(
       response => {
         // @ts-ignore
         this.setUser(response.data);
