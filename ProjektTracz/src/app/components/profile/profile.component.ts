@@ -58,14 +58,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.settingsSubscribe.unsubscribe();
   }
 
-  toCreateGame(): void {
-    this.router.navigate(['gc']);
-  }
-
-  toCategoriesManagement(): void {
-    this.router.navigate(['cm']);
-  }
-
   logOut(): void {
     this.authenticationService.logOut();
     console.log('User Log out.');
@@ -73,9 +65,5 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   toSettings(): void {
     this.router.navigate(['s']);
-  }
-
-  toHistoryAndStatistics(): void {
-    this.router.navigate(['hns']);
   }
 }

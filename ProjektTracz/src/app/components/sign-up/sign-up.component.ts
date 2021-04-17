@@ -34,7 +34,7 @@ export class SignUpComponent implements OnInit {
   }
 
   signUp(): void {
-    this.authenticationService.SignUp(this.signUpUserModel);
+    this.authenticationService.QuietlySignUp(this.signUpUserModel);
   }
 
   openSignIn(): void {

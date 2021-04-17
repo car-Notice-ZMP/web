@@ -1,4 +1,4 @@
-import {Injectable, Injector} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 
@@ -14,7 +14,6 @@ import {SocialAuthService} from 'angularx-social-login';
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<Login>;
   public currentUser: Observable<Login>;
-
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -32,58 +31,14 @@ export class AuthenticationService {
     });
   }
 
-  SignUp(user: Register): Subscription {
-    return this.http.post('http://34.122.22.62:8080/api/auth/register', user).subscribe(
-      response => {
-        this.openSnackBar('User registered successfully', '');
-        // @ts-ignore
-        console.log('User Signed Up');
-        // @ts-ignore
-        localStorage.setItem('userID', response.data.user.id);
-        this.dialog.closeAll();
-        // @ts-ignore
-        basicCategoriesService.load(response.data.user.id);
-      },
-      error => {
-        this.openSnackBar('Something went wrong', '');
-        console.log('Error:', error.status, error.message);
-      }
-    );
-
-  }
-
-  SignIn(user: Login): Subscription {
-    return this.http.post('http://34.122.22.62:8080/api/auth/login', user).subscribe(
-      response => {
-        localStorage.setItem('socialLogin', 'false');
-        // @ts-ignore
-        this.user = response.data.user;
-        this.logIn();
-        console.log('User signed in. ');
-        // @ts-ignore
-        localStorage.setItem('username', response.data.user.username);
-        // @ts-ignore
-        localStorage.setItem('authToken', response.data.user.authentication_token);
-        // @ts-ignore
-        localStorage.setItem('userID', response.data.user.id);
-        this.openSnackBar('User signed successfully', '');
-        this.dialog.closeAll();
-        this.router.navigate(['p']);
-      },
-      error => {
-        this.openSnackBar('Something went wrong', '');
-      }
-    );
-  }
-
   QuietlySignUp(user: Register): Subscription {
     return this.http.post('http://34.122.22.62:8080/api/auth/register', user).subscribe(
       response => {
         console.log('User Signed Up');
         // @ts-ignore
-        basicCategoriesService.load(response.data.user.id);
-        // @ts-ignore
         localStorage.setItem('userID', response.data.user.id);
+        this.openSnackBar('User Signed Up! ', '');
+        this.router.navigate(['profile']);
       },
       error => {
         console.log('Error:', error.status, error.statusText);
@@ -93,7 +48,6 @@ export class AuthenticationService {
   }
 
   QuietlySignIn(user: Login): Subscription {
-
     return this.http.post('http://34.122.22.62:8080/api/auth/login', user).subscribe(
       response => {
         // @ts-ignore

@@ -17,8 +17,7 @@ export class GoogleComponent implements OnInit {
   }
 
   async signInWithGoogle(): Promise<void> {
-    this.router.navigate(['profile']);
-    // await this.socialService.signInWithGoogle();
+    await this.socialService.signInWithGoogle();
   }
 
   ngOnInit(): void {

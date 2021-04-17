@@ -44,6 +44,6 @@ export class SignInComponent implements OnInit {
   }
 
   signIn(): void {
-    this.authenticationService.SignIn(this.signInUserModel);
+    this.authenticationService.QuietlySignIn(this.signInUserModel);
   }
 }
