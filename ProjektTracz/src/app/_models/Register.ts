@@ -1,15 +1,17 @@
 // tslint:disable-next-line:class-name
 export class Register {
-  username: string;
+  name: string;
   email: string;
   password: string;
-  passwordConfirmation: string;
+  // tslint:disable-next-line:variable-name
+  password_confirmation: string;
 
 
-  constructor(username, email, password, passwordConfirmation) {
-    this.username = username;
+  // tslint:disable-next-line:variable-name
+  constructor(name, email, password, password_confirmation) {
+    this.name = name;
     this.email = email;
     this.password = password;
-    this.passwordConfirmation = passwordConfirmation;
+    this.password_confirmation = password_confirmation;
   }
 }

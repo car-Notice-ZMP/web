@@ -31,7 +31,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userSettingsService.get(this.userID);
     this.settingsSubscribe = this.userSettingsService.userObservable.subscribe(
       user => {
-        this.user = user.username;
+        console.log(user.name);
+        this.user = user.name;
       });
   }
 

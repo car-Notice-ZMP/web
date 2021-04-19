@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser} from 'angularx-social-login';
+import {GoogleLoginProvider, SocialAuthService, SocialUser} from 'angularx-social-login';
 import {Router} from '@angular/router';
 import {Register} from '../_models/Register';
 import {AuthenticationService} from './authentication.service';
@@ -20,14 +20,14 @@ export class SocialService {
   subscribeSocial(): void {
     this.socialLogin = this.authService.authState.subscribe((user) => {
       this.user = user;
-      localStorage.setItem('username', user.firstName);
+      localStorage.setItem('name', user.firstName);
       localStorage.setItem('email', user.email);
       localStorage.setItem('authToken', user.authToken);
       localStorage.setItem('socialLogin', 'true');
 
-      this.newUser.username = user.firstName;
+      this.newUser.name = user.firstName;
       this.newUser.email = user.email;
-      this.newUser.passwordConfirmation = user.id;
+      this.newUser.password_confirmation = user.id;
       this.newUser.password = user.id;
 
       this.login.email = user.email;
@@ -57,7 +57,7 @@ export class SocialService {
   async signOut(): Promise<void> {
     await this.authService.signOut().then(
       () => {
-        localStorage.removeItem('username');
+        localStorage.removeItem('name');
         localStorage.removeItem('email');
         localStorage.removeItem('authToken');
         localStorage.removeItem('response');

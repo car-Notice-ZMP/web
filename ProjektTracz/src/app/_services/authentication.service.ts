@@ -31,14 +31,48 @@ export class AuthenticationService {
     });
   }
 
-  QuietlySignUp(user: Register): Subscription {
+  SignUp(user: Register): Subscription {
     return this.http.post('http://34.122.22.62:8080/api/auth/register', user).subscribe(
       response => {
+        this.openSnackBar('User registered successfully', '');
+        // @ts-ignore
         console.log('User Signed Up');
         // @ts-ignore
         localStorage.setItem('userID', response.data.user.id);
-        this.openSnackBar('User Signed Up! ', '');
+        this.dialog.closeAll();
+      },
+      error => {
+        this.openSnackBar('Something went wrong', '');
+        console.log('Error:', error.status, error.message);
+      }
+    );
+
+  }
+
+  SignIn(user: Login): Subscription {
+    return this.http.post('http://34.122.22.62:8080/api/auth/login', user).subscribe(
+      message => {
+        console.log(message);
+        localStorage.setItem('socialLogin', 'false');
+        // @ts-ignore
+        this.logIn();
+        console.log('User signed in. ');
+        this.openSnackBar('User signed successfully', '');
+        this.dialog.closeAll();
         this.router.navigate(['profile']);
+      },
+      error => {
+        this.openSnackBar('Something went wrong', '');
+      }
+    );
+  }
+
+  QuietlySignUp(user: Register): Subscription {
+    return this.http.post('http://34.122.22.62:8080/api/auth/register', user).subscribe(
+      message => {
+        console.log('User Signed Up');
+        // @ts-ignore
+        localStorage.setItem('userID', message.data.user.id);
       },
       error => {
         console.log('Error:', error.status, error.statusText);
@@ -48,18 +82,19 @@ export class AuthenticationService {
   }
 
   QuietlySignIn(user: Login): Subscription {
+
     return this.http.post('http://34.122.22.62:8080/api/auth/login', user).subscribe(
-      response => {
+      message => {
         // @ts-ignore
-        this.user = response.data.user;
+        this.user = message.data.user;
         this.logIn();
         console.log('User signed in. ');
         // @ts-ignore
-        localStorage.setItem('username', response.data.user.username);
+        localStorage.setItem('name', message.data.user.username);
         // @ts-ignore
-        localStorage.setItem('authToken', response.data.user.authentication_token);
+        localStorage.setItem('authToken', message.data.user.authentication_token);
         // @ts-ignore
-        localStorage.setItem('userID', response.data.user.id);
+        localStorage.setItem('userID', message.data.user.id);
         this.router.navigate(['profile']);
       },
       error => {

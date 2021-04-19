@@ -19,7 +19,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Podaj nazwę użytkownika</mat-label>
-    <input required matInput [(ngModel)]="signUpUserModel.username">
+    <input required matInput [(ngModel)]="signUpUserModel.name">
     <button matSuffix mat-icon-button disabled></button>
   </mat-form-field>
 
@@ -40,7 +40,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Potwierdź hasło</mat-label>
-    <input required matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="signUpUserModel.passwordConfirmation">
+    <input required matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="signUpUserModel.password_confirmation">
     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
