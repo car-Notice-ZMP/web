@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {Router} from '@angular/router';
-import {Login} from '../../_models/Login';
+import {Login} from '../../shared/_models/Login';
 import {ColorSchemeService} from '../../_services/color-scheme.service';
 
 @Component({
@@ -45,6 +45,5 @@ export class SignInComponent implements OnInit {
 
   signIn(): void {
     this.authenticationService.SignIn(this.signInUserModel);
-
   }
 }

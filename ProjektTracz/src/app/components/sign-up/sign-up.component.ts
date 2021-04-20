@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ColorSchemeService} from '../../_services/color-scheme.service';
 import {Router} from '@angular/router';
-import {Register} from '../../_models/Register';
+import {Register} from '../../shared/_models/Register';
 import {AuthenticationService} from '../../_services/authentication.service';
 
 @Component({

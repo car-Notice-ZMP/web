@@ -13,7 +13,6 @@ import {AuthenticationService} from './_services/authentication.service';
 import {JwtInterceptor} from './_helpers/jwt.interceptor';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { GoogleComponent } from './components/google/google.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 
@@ -23,7 +22,6 @@ import { SettingsComponent } from './components/settings/settings.component';
     routingComponents,
     SignInComponent,
     SignUpComponent,
-    GoogleComponent,
     ProfileComponent,
     SettingsComponent
   ],
@@ -50,7 +48,7 @@ import { SettingsComponent } from './components/settings/settings.component';
         autoLogin: false,
         providers: [{
           id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider('http://34.122.22.62:8080/api/google')
+          provider: new GoogleLoginProvider('https://citygame.ga/api/google')
         }]
       } as SocialAuthServiceConfig
     }],

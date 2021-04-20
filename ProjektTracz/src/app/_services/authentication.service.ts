@@ -1,27 +1,32 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
-
-import {Login} from '../_models/Login';
-import {Register} from '../_models/Register';
+import {JwtHelperService} from '@auth0/angular-jwt';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {SocialAuthService} from 'angularx-social-login';
+import {User} from '../shared/_models/User';
+import {UserService} from './user.service';
 
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<Login>;
-  public currentUser: Observable<Login>;
+  loggedIn = false;
+  isAdmin = false;
+  currentUser: User = new User();
 
   constructor(private http: HttpClient,
               private router: Router,
               public dialog: MatDialog,
               private authService: SocialAuthService,
-              private snackBar: MatSnackBar) {
-    this.currentUserSubject = new BehaviorSubject<Login>(JSON.parse(localStorage.getItem('currentUser')));
-    this.currentUser = this.currentUserSubject.asObservable();
+              private snackBar: MatSnackBar,
+              private userService: UserService,
+              private jwtHelper: JwtHelperService) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedUser = this.decodeUserFromToken(token);
+      this.setCurrentUser(decodedUser);
+    }
   }
 
 
@@ -31,87 +36,39 @@ export class AuthenticationService {
     });
   }
 
-  SignUp(user: Register): Subscription {
-    return this.http.post('http://34.122.22.62:8080/api/auth/register', user).subscribe(
-      response => {
-        this.openSnackBar('User registered successfully', '');
-        // @ts-ignore
-        console.log('User Signed Up');
-        // @ts-ignore
-        localStorage.setItem('userID', response.data.user.id);
-        this.dialog.closeAll();
-      },
-      error => {
-        this.openSnackBar('Something went wrong', '');
-        console.log('Error:', error.status, error.message);
-      }
-    );
-
-  }
-
-  SignIn(user: Login): Subscription {
-    return this.http.post('http://34.122.22.62:8080/api/auth/login', user).subscribe(
-      message => {
-        console.log(message);
-        localStorage.setItem('socialLogin', 'false');
-        // @ts-ignore
-        this.logIn();
-        console.log('User signed in. ');
-        this.openSnackBar('User signed successfully', '');
-        this.dialog.closeAll();
+  login(emailAndPassword): void {
+    this.userService.login(emailAndPassword).subscribe(
+      res => {
+        localStorage.setItem('token', res.token);
+        const decodedUser = this.decodeUserFromToken(res.token);
+        this.setCurrentUser(decodedUser);
+        this.loggedIn = true;
         this.router.navigate(['profile']);
-      },
-      error => {
-        this.openSnackBar('Something went wrong', '');
-      }
+      }, error => this.openSnackBar('Invalid email or password!', '')
     );
   }
 
-  QuietlySignUp(user: Register): Subscription {
-    return this.http.post('http://34.122.22.62:8080/api/auth/register', user).subscribe(
-      message => {
-        console.log('User Signed Up');
-        // @ts-ignore
-        localStorage.setItem('userID', message.data.user.id);
-      },
-      error => {
-        console.log('Error:', error.status, error.statusText);
-      }
-    );
-
-  }
-
-  QuietlySignIn(user: Login): Subscription {
-
-    return this.http.post('http://34.122.22.62:8080/api/auth/login', user).subscribe(
-      message => {
-        // @ts-ignore
-        this.user = message.data.user;
-        this.logIn();
-        console.log('User signed in. ');
-        // @ts-ignore
-        localStorage.setItem('name', message.data.user.username);
-        // @ts-ignore
-        localStorage.setItem('authToken', message.data.user.authentication_token);
-        // @ts-ignore
-        localStorage.setItem('userID', message.data.user.id);
-        this.router.navigate(['profile']);
-      },
-      error => {
-        this.openSnackBar('Something went wrong', '');
-        console.log('Error:', error);
-      }
-    );
-  }
-
-
-  logIn(): void {
-    localStorage.setItem('isLoggedIn', 'true');
-  }
-
-  logOut(): void {
-    localStorage.setItem('isLoggedIn', 'false');
-    this.authService.signOut(true);
+  logout(): void {
+    localStorage.removeItem('token');
+    this.loggedIn = false;
+    this.isAdmin = false;
+    this.currentUser = new User();
     this.router.navigate(['h']);
   }
+
+  decodeUserFromToken(token): object {
+    return this.jwtHelper.decodeToken(token).user;
+  }
+
+  setCurrentUser(decodedUser): void {
+    this.loggedIn = true;
+    this.currentUser._id = decodedUser._id;
+    this.currentUser.name = decodedUser.name;
+    this.currentUser.role = decodedUser.role;
+    this.isAdmin = decodedUser.role === 'admin';
+    delete decodedUser.role;
+  }
+
 }
+
+

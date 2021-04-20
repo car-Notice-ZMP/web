@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import {HomeComponent} from './components/home/home.component';
 import {SignInComponent} from './components/sign-in/sign-in.component';
 import {SignUpComponent} from './components/sign-up/sign-up.component';
-import {GoogleComponent} from './components/google/google.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {SettingsComponent} from './components/settings/settings.component';
 
@@ -21,7 +20,6 @@ const routes: Routes = [
 })
 export class AppRoutingModule {}
 export const routingComponents = [
-  HomeComponent,
-  GoogleComponent
+  HomeComponent
 ];
 

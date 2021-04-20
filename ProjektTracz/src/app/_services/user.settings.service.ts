@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Subject} from 'rxjs';
-import {User} from '../_models/User';
+import {User} from '../shared/_models/User';
 
 @Injectable({
   providedIn: 'root'

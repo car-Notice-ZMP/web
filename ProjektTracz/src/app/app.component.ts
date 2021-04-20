@@ -1,7 +1,5 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {AuthenticationService} from './_services/authentication.service';
-import {Router} from '@angular/router';
-import {Login} from './_models/Login';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +8,13 @@ import {Login} from './_models/Login';
 })
 export class AppComponent {
   title = 'ProjektTracz';
-  currentUser: Login;
 
   constructor(
-    private router: Router,
-    private authenticationService: AuthenticationService
+    private changeDetector: ChangeDetectorRef,
+    public authenticationService: AuthenticationService
   ) {
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+  }
+  ngAfterViewChecked(): void {
+    this.changeDetector.detectChanges();
   }
 }
