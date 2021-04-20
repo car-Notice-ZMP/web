@@ -4,51 +4,58 @@
   <span class="spacer"></span>
   <span><button mat-raised-button color="accent" (click)="openSignIn()">Sign In</button></span>
 </mat-toolbar>
-<div fxLayoutAlign="end" fxLayoutGap="10px">
-  <div fxLayoutAlign="center">
-    <mat-icon>wb_sunny</mat-icon>
-    <mat-slide-toggle [checked]="checked" (click)="setTheme()"></mat-slide-toggle>
-    <mat-icon>brightness_3</mat-icon>
-  </div>
-</div>
 
 <body fxFill class="mat-app-background" fxLayoutAlign="center center">
 
 <div fxLayoutAlign="center center" fxLayout="column">
-  <h2>Zarejestruj się</h2>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Podaj nazwę użytkownika</mat-label>
-    <input required matInput [(ngModel)]="signUpUserModel.name">
-    <button matSuffix mat-icon-button disabled></button>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Podaj e-mail</mat-label>
-    <input required matInput [(ngModel)]="signUpUserModel.email">
-    <button matSuffix mat-icon-button disabled></button>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Podaj hasło</mat-label>
-    <input required matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="signUpUserModel.password">
-    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </button>
-  </mat-form-field>
-
-
-  <mat-form-field appearance="fill">
-    <mat-label>Potwierdź hasło</mat-label>
-    <input required matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="signUpUserModel.password_confirmation">
-    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </button>
-  </mat-form-field>
-
-
-  <div fxLayoutGap="20%" fxLayout="column">
-    <button fxFill mat-raised-button (click)="signUp()" type="submit">Zarejestruj się! </button>
+  <div class="card">
+    <h4 class="card-header">Register</h4>
+    <div class="card-body">
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="input-group" [ngClass]="setClassUsername()">
+          <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="fa fa-user"></i>
+          </span>
+          </div>
+          <input class="form-control" type="text" name="username"
+                 formControlName="username" placeholder="Username" autofocus>
+        </div>
+        <div class="input-group" [ngClass]="setClassEmail()">
+          <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="fa fa-envelope"></i>
+          </span>
+          </div>
+          <input class="form-control" type="email" name="email"
+                 formControlName="email" placeholder="Email">
+        </div>
+        <div class="input-group" [ngClass]="setClassPassword()">
+          <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="fa fa-key"></i>
+          </span>
+          </div>
+          <input class="form-control" type="password" name="password"
+                 formControlName="password" placeholder="Password">
+        </div>
+        <div class="input-group">
+          <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="fa fa-black-tie"></i>
+          </span>
+          </div>
+          <select class="custom-select" name="role" formControlName="role">
+            <option value="" selected disabled>Role</option>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid">
+          <i class="fa fa-user-plus"></i> Register
+        </button>
+      </form>
+    </div>
   </div>
 </div>
 </body>

@@ -4,7 +4,6 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {SocialAuthService} from 'angularx-social-login';
 import {User} from '../shared/_models/User';
 import {UserService} from './user.service';
 
@@ -18,7 +17,6 @@ export class AuthenticationService {
   constructor(private http: HttpClient,
               private router: Router,
               public dialog: MatDialog,
-              private authService: SocialAuthService,
               private snackBar: MatSnackBar,
               private userService: UserService,
               private jwtHelper: JwtHelperService) {
@@ -48,12 +46,12 @@ export class AuthenticationService {
     );
   }
 
-  logout(): void {
+  logOut(): void {
     localStorage.removeItem('token');
     this.loggedIn = false;
     this.isAdmin = false;
     this.currentUser = new User();
-    this.router.navigate(['h']);
+    this.router.navigate(['/']);
   }
 
   decodeUserFromToken(token): object {

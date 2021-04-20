@@ -3,7 +3,6 @@ import {AuthenticationService} from '../../_services/authentication.service';
 import {Router} from '@angular/router';
 import {ColorSchemeService} from '../../_services/color-scheme.service';
 import {UserSettingsService} from '../../_services/user.settings.service';
-import {SocialService} from '../../_services/social.service';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -19,7 +18,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   checked = false;
 
   constructor(
-    private socialService: SocialService,
     private authenticationService: AuthenticationService,
     private router: Router,
     private colorSchemeService: ColorSchemeService,
