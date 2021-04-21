@@ -31,8 +31,9 @@ export class SignUpComponent implements OnInit {
     Validators.required,
     Validators.minLength(6)
   ]);
-  role = new FormControl('', [
-    Validators.required
+  passwordConfirmation = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6)
   ]);
 
   constructor(private router: Router,
@@ -46,10 +47,10 @@ export class SignUpComponent implements OnInit {
   register(): void {
     this.userService.register(this.registerForm.value).subscribe(
       res => {
-        this.openSnackBar('you successfully registered!', 'success');
+        this.openSnackBar('Udało się zarejestrować! ', '');
         this.router.navigate(['login']);
       },
-      error => this.openSnackBar('email already exists', 'danger')
+      error => this.openSnackBar('Użytkownik z takim e-mailem już istnieje!', '')
     );
   }
 
@@ -69,7 +70,7 @@ export class SignUpComponent implements OnInit {
       username: this.username,
       email: this.email,
       password: this.password,
-      role: this.role
+      passwordConfirmation: this.passwordConfirmation
     });
   }
 
@@ -83,6 +84,14 @@ export class SignUpComponent implements OnInit {
 
   setClassPassword(): object {
     return {'has-danger': !this.password.pristine && !this.password.valid};
+  }
+
+  setClassPasswordConfirmation(): object {
+    return {
+      'has-danger': !this.passwordConfirmation.pristine
+        && !this.passwordConfirmation.valid
+        && this.passwordConfirmation.valid === this.password.valid
+    };
   }
 
 }

@@ -2,41 +2,32 @@
 <mat-toolbar>
   <span>Notice My Car</span>
   <span class="spacer"></span>
-  <span><button mat-raised-button color="accent" (click)="openSignUp()">Sign Up</button></span>
+  <span><button mat-raised-button color="accent" (click)="openSignUp()">Zarejestruj się</button></span>
 </mat-toolbar>
 
 
 <body fxFill class="mat-app-background" fxLayoutAlign="center center">
 
-<div class="card">
-  <h4 class="card-header">Login</h4>
-  <div class="card-body">
-    <form [formGroup]="loginForm" (ngSubmit)="signIn()">
-      <div class="input-group" [ngClass]="setClassEmail()">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="fa fa-envelope"></i>
-          </span>
-        </div>
-        <input class="form-control" type="email" name="email"
-               formControlName="email" placeholder="Email" autofocus>
-      </div>
-      <div class="input-group" [ngClass]="setClassPassword()">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="fa fa-key"></i>
-          </span>
-        </div>
-        <input class="form-control" type="password" name="password"
-               formControlName="password" placeholder="Password">
-      </div>
-      <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">
-        <i class="fa fa-sign-in"></i> Login
-      </button>
-    </form>
+<div fxLayoutAlign="center center" fxLayout="column">
+  <h2>Zaloguj się</h2>
+  <mat-form-field appearance="fill" [formGroup]="loginForm" (ngSubmit)="signIn()" [ngClass]="setClassEmail()">
+    <mat-label>Podaj adres e-mail:</mat-label>
+    <input required matInput type="email" name="email"
+           formControlName="email" placeholder="Email" autofocus>
+    <button matSuffix mat-icon-button disabled></button>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Podaj Hasło</mat-label>
+    <input matInput [type]="hide ? 'password' : 'text'" [ngClass]="setClassPassword()">
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+  <div fxLayoutGap="2%" fxLayout="column" >
+    <button fxFill mat-raised-button (click)="signIn()" type="submit">Zaloguj się! </button>
+    <app-google></app-google>
   </div>
 </div>
-
 
 
 </body>
