@@ -2,50 +2,54 @@
 <mat-toolbar>
   <span>Notice My Car</span>
   <span class="spacer"></span>
-  <span><button mat-raised-button color="accent" (click)="openSignIn()">Zaloguj się! </button></span>
+  <span><button mat-raised-button color="accent" (click)="openSignIn()">Sign In</button></span>
 </mat-toolbar>
+<div fxLayoutAlign="end" fxLayoutGap="10px">
+  <div fxLayoutAlign="center">
+    <mat-icon>wb_sunny</mat-icon>
+    <mat-slide-toggle [checked]="checked" (click)="setTheme()"></mat-slide-toggle>
+    <mat-icon>brightness_3</mat-icon>
+  </div>
+</div>
 
 <body fxFill class="mat-app-background" fxLayoutAlign="center center">
-<form [formGroup]="registerForm" (ngSubmit)="register()">
-  <div fxLayoutAlign="center center" fxLayout="column">
-    <h2>Zarejestruj się</h2>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Podaj nazwę użytkownika</mat-label>
-      <input required matInput [ngClass]="setClassUsername()">
-      <button matSuffix mat-icon-button disabled></button>
-    </mat-form-field>
+<div fxLayoutAlign="center center" fxLayout="column">
+  <h2>Zarejestruj się</h2>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Podaj e-mail</mat-label>
-      <input required matInput [ngClass]="setClassEmail()">
-      <button matSuffix mat-icon-button disabled></button>
-    </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Podaj nazwę użytkownika</mat-label>
+    <input required matInput [(ngModel)]="signUpUserModel.name">
+    <button matSuffix mat-icon-button disabled></button>
+  </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Podaj hasło</mat-label>
-      <input required matInput [type]="hide ? 'password' : 'text'" [ngClass]="setClassPassword()">
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hide">
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-    </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Podaj e-mail</mat-label>
+    <input required matInput [(ngModel)]="signUpUserModel.email">
+    <button matSuffix mat-icon-button disabled></button>
+  </mat-form-field>
 
-
-    <mat-form-field appearance="fill">
-      <mat-label>Potwierdź hasło</mat-label>
-      <input required matInput [type]="hide ? 'password' : 'text'" [ngClass]="setClassPasswordConfirmation()">
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hide">
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-    </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Podaj hasło</mat-label>
+    <input required matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="signUpUserModel.password">
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
 
 
-    <div fxLayoutGap="20%" fxLayout="column">
-      <button fxFill mat-raised-button (click)="register()" type="submit">Zarejestruj się!</button>
-    </div>
+  <mat-form-field appearance="fill">
+    <mat-label>Potwierdź hasło</mat-label>
+    <input required matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="signUpUserModel.password_confirmation">
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+
+
+  <div fxLayoutGap="20%" fxLayout="column">
+    <button fxFill mat-raised-button (click)="signUp()" type="submit">Zarejestruj się! </button>
   </div>
-</form>
+</div>
 </body>
 </html>

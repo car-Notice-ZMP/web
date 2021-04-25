@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {Router} from '@angular/router';
-import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms';
+import {Login} from '../../shared/_models/Login';
+import {ColorSchemeService} from '../../_services/color-scheme.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,48 +11,39 @@ import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms';
 })
 export class SignInComponent implements OnInit {
 
+  signInUserModel = new Login('', '');
+  checked = false;
   hide = true;
-  loginForm: FormGroup;
-  email = new FormControl('', [
-    Validators.email,
-    Validators.required,
-    Validators.minLength(3),
-    Validators.maxLength(100)
-  ]);
-  password = new FormControl('', [
-    Validators.required,
-    Validators.minLength(6)
-  ]);
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
-              private formBuilder: FormBuilder) {
+              private colorSchemeService: ColorSchemeService) {
+    this.checkSlideToggle();
+    this.colorSchemeService.load();
+  }
+
+  checkSlideToggle(): void {
+    if (localStorage.getItem('prefers-color') === 'dark') {
+      this.checked = true;
+    }
   }
 
   openSignUp(): void {
     this.router.navigate(['register']);
   }
 
-  ngOnInit(): void {
-    if (this.authenticationService.loggedIn) {
-      this.router.navigate(['/']);
+  setTheme(): void {
+    if (localStorage.getItem('prefers-color') === 'light') {
+      this.colorSchemeService.update('dark');
+    } else {
+      this.colorSchemeService.update('light');
     }
-    this.loginForm = this.formBuilder.group({
-      email: this.email,
-      password: this.password
-    });
   }
 
-  setClassEmail(): object {
-    return {'has-danger': !this.email.pristine && !this.email.valid};
-  }
-
-  setClassPassword(): object {
-    return {'has-danger': !this.password.pristine && !this.password.valid};
-
+  ngOnInit(): void {
   }
 
   signIn(): void {
-    this.authenticationService.login(this.loginForm.value);
+    this.authenticationService.SignIn(this.signInUserModel);
   }
 }

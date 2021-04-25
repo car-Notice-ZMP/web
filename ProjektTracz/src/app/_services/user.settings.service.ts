@@ -28,12 +28,4 @@ export class UserSettingsService {
   setUser(user: User): void {
     this.userSource.next(user);
   }
-
-  get(userID: string): void {
-    this.http.get('http://34.122.22.62:8080/api/auth/profile' + userID).subscribe(
-      response => {
-        // @ts-ignore
-        this.setUser(response.data);
-      });
-  }
 }

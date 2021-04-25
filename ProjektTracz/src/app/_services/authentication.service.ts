@@ -1,30 +1,27 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {JwtHelperService} from '@auth0/angular-jwt';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import {Login} from '../shared/_models/Login';
+import {Register} from '../shared/_models/Register';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {User} from '../shared/_models/User';
 import {UserService} from './user.service';
 
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-  loggedIn = false;
-  isAdmin = false;
-  currentUser: User = new User();
+  private currentUserSubject: BehaviorSubject<Login>;
+  public currentUser: Observable<Login>;
+  user: any;
 
   constructor(private http: HttpClient,
               private router: Router,
               public dialog: MatDialog,
               private snackBar: MatSnackBar,
-              private userService: UserService,
-              private jwtHelper: JwtHelperService) {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decodedUser = this.decodeUserFromToken(token);
-      this.setCurrentUser(decodedUser);
-    }
+              private userService: UserService) {
+    this.currentUserSubject = new BehaviorSubject<Login>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
   }
 
 
@@ -34,39 +31,88 @@ export class AuthenticationService {
     });
   }
 
-  login(emailAndPassword): void {
-    this.userService.login(emailAndPassword).subscribe(
-      res => {
-        localStorage.setItem('token', res.token);
-        const decodedUser = this.decodeUserFromToken(res.token);
-        this.setCurrentUser(decodedUser);
-        this.loggedIn = true;
+  SignUp(user: Register): Subscription {
+    return this.userService.register(user).subscribe(
+      response => {
+        this.openSnackBar('User registered successfully', '');
+        console.log('User Signed Up');
+        this.user = response;
+        this.dialog.closeAll();
+      },
+      error => {
+        this.openSnackBar('Something went wrong', '');
+        console.log('Error:', error.status, error.message);
+      }
+    );
+
+  }
+
+  SignIn(user: Login): Subscription {
+    return this.userService.login(user).subscribe(
+      response => {
+        // localStorage.setItem('socialLogin', 'false');
+        console.log(response);
+        this.logIn();
+        console.log('User signed in. ');
+        localStorage.setItem('username', response.name);
+        localStorage.setItem('authToken', response.token);
+        localStorage.setItem('userID', response.userID);
+        this.openSnackBar('User signed successfully', '');
+        this.dialog.closeAll();
         this.router.navigate(['profile']);
-      }, error => this.openSnackBar('Invalid email or password!', '')
+      },
+      error => {
+        this.openSnackBar('Something went wrong', '');
+      }
     );
   }
 
+  QuietlySignUp(user: Register): Subscription {
+    return this.userService.register(user).subscribe(
+      response => {
+        console.log('User Signed Up');
+        // @ts-ignore
+        basicCategoriesService.load(response.data.user.id);
+        // @ts-ignore
+        localStorage.setItem('userID', response.data.user.id);
+      },
+      error => {
+        console.log('Error:', error.status, error.statusText);
+      }
+    );
+
+  }
+
+  QuietlySignIn(user: Login): Subscription {
+    return this.userService.login(user).subscribe(
+      response => {
+        // @ts-ignore
+        this.user = response.data.user;
+        this.logIn();
+        console.log('User signed in. ');
+        // @ts-ignore
+        localStorage.setItem('username', response.data.user.username);
+        // @ts-ignore
+        localStorage.setItem('authToken', response.data.user.authentication_token);
+        // @ts-ignore
+        localStorage.setItem('userID', response.data.user.id);
+        this.router.navigate(['signed-in']);
+      },
+      error => {
+        this.openSnackBar('Something went wrong', '');
+        console.log('Error:', error);
+      }
+    );
+  }
+
+
+  logIn(): void {
+    localStorage.setItem('isLoggedIn', 'true');
+  }
+
   logOut(): void {
-    localStorage.removeItem('token');
-    this.loggedIn = false;
-    this.isAdmin = false;
-    this.currentUser = new User();
-    this.router.navigate(['/']);
+    localStorage.setItem('isLoggedIn', 'false');
+    // this.authService.signOut(true);
+    this.router.navigate(['h']);
   }
-
-  decodeUserFromToken(token): object {
-    return this.jwtHelper.decodeToken(token).user;
-  }
-
-  setCurrentUser(decodedUser): void {
-    this.loggedIn = true;
-    this.currentUser._id = decodedUser._id;
-    this.currentUser.name = decodedUser.name;
-    this.currentUser.role = decodedUser.role;
-    this.isAdmin = decodedUser.role === 'admin';
-    delete decodedUser.role;
-  }
-
 }
-
-

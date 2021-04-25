@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {ColorSchemeService} from '../../_services/color-scheme.service';
 import {UserSettingsService} from '../../_services/user.settings.service';
 import {Subscription} from 'rxjs';
+import {UserService} from '../../_services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,37 +16,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
   userID: string;
   user: string;
   private settingsSubscribe: Subscription;
-  checked = false;
 
-  constructor(
-    private authenticationService: AuthenticationService,
-    private router: Router,
-    private colorSchemeService: ColorSchemeService,
-    private userSettingsService: UserSettingsService) {
-    this.checkSlideToggle();
+  constructor(private authenticationService: AuthenticationService,
+              private router: Router,
+              private colorSchemeService: ColorSchemeService,
+              private userSettingsService: UserSettingsService,
+              private userService: UserService) {
     this.colorSchemeService.load();
     this.user = localStorage.getItem('userID');
     localStorage.setItem('refreshed', 'false');
-    this.userSettingsService.get(this.userID);
+    this.userService.getUser();
     this.settingsSubscribe = this.userSettingsService.userObservable.subscribe(
       user => {
-        console.log(user.name);
         this.user = user.name;
       });
-  }
-
-  checkSlideToggle(): void {
-    if (localStorage.getItem('prefers-color') === 'dark') {
-      this.checked = true;
-    }
-  }
-
-  setTheme(): void {
-    if (localStorage.getItem('prefers-color') === 'light') {
-      this.colorSchemeService.update('dark');
-    } else {
-      this.colorSchemeService.update('light');
-    }
   }
 
   ngOnInit(): void {
@@ -57,6 +41,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.settingsSubscribe.unsubscribe();
   }
 
+  toCreateGame(): void {
+    this.router.navigate(['gc']);
+  }
+
+  toCategoriesManagement(): void {
+    this.router.navigate(['cm']);
+  }
+
   logOut(): void {
     this.authenticationService.logOut();
     console.log('User Log out.');
@@ -65,4 +57,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   toSettings(): void {
     this.router.navigate(['s']);
   }
+
+  toHistoryAndStatistics(): void {
+    this.router.navigate(['hns']);
+  }
+
 }

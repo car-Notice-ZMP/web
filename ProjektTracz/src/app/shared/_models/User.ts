@@ -1,7 +1,10 @@
 export class User {
-  email?: string;
-  name?: string;
-  // tslint:disable-next-line:variable-name
-  _id?: string;
-  role?: string;
+  name: string;
+  email: string;
+
+  constructor(name: string,
+              email: string) {
+    this.name = name;
+    this.email = email;
+  }
 }
