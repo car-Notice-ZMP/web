@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {ColorSchemeService} from '../../_services/color-scheme.service';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Register} from '../../shared/_models/Register';
 import {AuthenticationService} from '../../_services/authentication.service';
@@ -15,23 +14,10 @@ export class SignUpComponent implements OnInit {
   checked = false;
   hide = true;
 
-  constructor(private colorSchemeService: ColorSchemeService,
-              private router: Router,
-              private authenticationService: AuthenticationService) { }
-
-  checkSlideToggle(): void {
-    if (localStorage.getItem('prefers-color') === 'dark') {
-      this.checked = true;
-    }
+  constructor(private router: Router,
+              private authenticationService: AuthenticationService) {
   }
 
-  setTheme(): void {
-    if (localStorage.getItem('prefers-color') === 'light') {
-      this.colorSchemeService.update('dark');
-    } else {
-      this.colorSchemeService.update('light');
-    }
-  }
 
   signUp(): void {
     this.authenticationService.SignUp(this.signUpUserModel);
@@ -40,7 +26,6 @@ export class SignUpComponent implements OnInit {
   openSignIn(): void {
     this.router.navigate(['login']);
   }
-
 
   ngOnInit(): void {
   }

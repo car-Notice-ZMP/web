@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {UserService} from './user.service';
+import {User} from '../shared/_models/User';
 
 
 @Injectable({providedIn: 'root'})
@@ -14,6 +15,7 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<Login>;
   public currentUser: Observable<Login>;
   user: any;
+  token: string;
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -31,13 +33,14 @@ export class AuthenticationService {
     });
   }
 
-  SignUp(user: Register): Subscription {
+  // tslint:disable-next-line:typedef
+  SignUp(user: Register) {
     return this.userService.register(user).subscribe(
       response => {
         this.openSnackBar('User registered successfully', '');
         console.log('User Signed Up');
-        this.user = response;
-        this.dialog.closeAll();
+        console.log(response);
+        localStorage.setItem('token', response.token);
       },
       error => {
         this.openSnackBar('Something went wrong', '');
@@ -52,13 +55,10 @@ export class AuthenticationService {
       response => {
         // localStorage.setItem('socialLogin', 'false');
         console.log(response);
-        this.logIn();
+        localStorage.setItem('token', response.access_token);
+        localStorage.setItem('isLoggedIn', 'true');
         console.log('User signed in. ');
-        localStorage.setItem('username', response.name);
-        localStorage.setItem('authToken', response.token);
-        localStorage.setItem('userID', response.userID);
         this.openSnackBar('User signed successfully', '');
-        this.dialog.closeAll();
         this.router.navigate(['profile']);
       },
       error => {
@@ -67,52 +67,25 @@ export class AuthenticationService {
     );
   }
 
-  QuietlySignUp(user: Register): Subscription {
-    return this.userService.register(user).subscribe(
-      response => {
-        console.log('User Signed Up');
-        // @ts-ignore
-        basicCategoriesService.load(response.data.user.id);
-        // @ts-ignore
-        localStorage.setItem('userID', response.data.user.id);
+  getUserInfo(user: User): void {
+    this.userService.getUser().subscribe(
+      res => {
+        console.log(res);
+        localStorage.getItem('name');
+        localStorage.getItem('email');
+        localStorage.getItem('email_verified_at');
+        localStorage.getItem('avatar');
       },
-      error => {
-        console.log('Error:', error.status, error.statusText);
+      err => {
+        console.log(err);
       }
     );
-
-  }
-
-  QuietlySignIn(user: Login): Subscription {
-    return this.userService.login(user).subscribe(
-      response => {
-        // @ts-ignore
-        this.user = response.data.user;
-        this.logIn();
-        console.log('User signed in. ');
-        // @ts-ignore
-        localStorage.setItem('username', response.data.user.username);
-        // @ts-ignore
-        localStorage.setItem('authToken', response.data.user.authentication_token);
-        // @ts-ignore
-        localStorage.setItem('userID', response.data.user.id);
-        this.router.navigate(['signed-in']);
-      },
-      error => {
-        this.openSnackBar('Something went wrong', '');
-        console.log('Error:', error);
-      }
-    );
-  }
-
-
-  logIn(): void {
-    localStorage.setItem('isLoggedIn', 'true');
   }
 
   logOut(): void {
+    localStorage.removeItem('token');
     localStorage.setItem('isLoggedIn', 'false');
-    // this.authService.signOut(true);
+    localStorage.removeItem('refreshed');
     this.router.navigate(['h']);
   }
 }

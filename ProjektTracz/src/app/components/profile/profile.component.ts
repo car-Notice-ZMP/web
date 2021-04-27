@@ -5,6 +5,7 @@ import {ColorSchemeService} from '../../_services/color-scheme.service';
 import {UserSettingsService} from '../../_services/user.settings.service';
 import {Subscription} from 'rxjs';
 import {UserService} from '../../_services/user.service';
+import {User} from '../../shared/_models/User';
 
 @Component({
   selector: 'app-profile',
@@ -16,6 +17,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   userID: string;
   user: string;
   private settingsSubscribe: Subscription;
+  profileUserModel = new User('', '', '', '');
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
@@ -26,10 +28,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.user = localStorage.getItem('userID');
     localStorage.setItem('refreshed', 'false');
     this.userService.getUser();
-    this.settingsSubscribe = this.userSettingsService.userObservable.subscribe(
-      user => {
-        this.user = user.name;
-      });
+    this.authenticationService.getUserInfo(this.profileUserModel);
   }
 
   ngOnInit(): void {
@@ -58,8 +57,5 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.router.navigate(['s']);
   }
 
-  toHistoryAndStatistics(): void {
-    this.router.navigate(['hns']);
-  }
 
 }

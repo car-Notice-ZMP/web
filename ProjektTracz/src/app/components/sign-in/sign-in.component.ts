@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {Router} from '@angular/router';
 import {Login} from '../../shared/_models/Login';
-import {ColorSchemeService} from '../../_services/color-scheme.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,28 +15,11 @@ export class SignInComponent implements OnInit {
   hide = true;
 
   constructor(private authenticationService: AuthenticationService,
-              private router: Router,
-              private colorSchemeService: ColorSchemeService) {
-    this.checkSlideToggle();
-    this.colorSchemeService.load();
-  }
-
-  checkSlideToggle(): void {
-    if (localStorage.getItem('prefers-color') === 'dark') {
-      this.checked = true;
-    }
+              private router: Router) {
   }
 
   openSignUp(): void {
     this.router.navigate(['register']);
-  }
-
-  setTheme(): void {
-    if (localStorage.getItem('prefers-color') === 'light') {
-      this.colorSchemeService.update('dark');
-    } else {
-      this.colorSchemeService.update('light');
-    }
   }
 
   ngOnInit(): void {
