@@ -1,5 +1,12 @@
-<html class="mat-app-background" fxLayoutAlign="center center">
-<body class="mat-app-background">
+<html class="mat-app-background">
+<mat-toolbar>
+  <span>Notice My Car</span>
+  <span class="spacer"></span>
+  <span><button mat-raised-button color="accent" (click)="toProfile()">Profil</button></span>
+  <span class="small-spacer"></span>
+  <span><button mat-raised-button color="accent" (click)="logOut()">Wyloguj się</button></span>
+</mat-toolbar>
+<body fxFill class="mat-app-background" fxLayoutAlign="center center">
 <br>
 <mat-accordion>
   <div fxFill fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="16px">
@@ -31,15 +38,17 @@
       <mat-expansion-panel-header hideToggle>
         <mat-panel-title fxLayoutAlign="center center" fxLayoutGap="16px">
           <mat-icon color="primary">text_format</mat-icon>
-          <mat-label>{{'change-nick'|tr}}</mat-label>
+          <mat-label>Zmień nazwę użytkownika</mat-label>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-panel-description fxLayout="column">
         <mat-form-field>
-          <mat-label>{{'enter-name'|tr}}</mat-label>
-          <input matInput [(ngModel)]="user.username">
+          <mat-label>Wprowadź nową nazwę użytkownika</mat-label>
+          <input matInput [(ngModel)]="user.name">
         </mat-form-field>
-        <button mat-raised-button (click)="changeUsername(user)" type="submit">{{'Change'|tr}}</button>
+        <!--
+        <button mat-raised-button (click)="changeUsername(user)" type="submit">Zmień! </button>
+      -->
       </mat-panel-description>
     </mat-expansion-panel>
 
@@ -47,17 +56,20 @@
       <mat-expansion-panel-header hideToggle>
         <mat-panel-title fxLayoutAlign="center center" fxLayoutGap="16px">
           <mat-icon color="accent">alternate_email</mat-icon>
-          <mat-label>{{'change-mail'|tr}}</mat-label>
+          <mat-label>Zmień adres email</mat-label>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-panel-description fxLayout="column">
         <mat-form-field>
-          <mat-label>{{'email'|tr}}</mat-label>
+          <mat-label>Podaj adres email</mat-label>
           <input matInput [(ngModel)]="user.email">
         </mat-form-field>
+        <!--
         <button mat-raised-button (click)="changeEmail(user)" type="submit">{{'Change'|tr}}</button>
+      -->
       </mat-panel-description>
     </mat-expansion-panel>
+    <!--
     <button fxLayoutAlign="center center" mat-stroked-button color="warn" (click)="deleteUser()">
       <mat-icon>delete</mat-icon>
       {{'delete'|tr}}
@@ -67,6 +79,7 @@
       <mat-icon>reply</mat-icon>
       {{'back'|tr}}
     </button>
+    -->
   </div>
 </mat-accordion>
 </body>

@@ -93,8 +93,11 @@ export class AuthenticationService {
 
   logOut(): void {
     localStorage.removeItem('token');
-    localStorage.setItem('isLoggedIn', 'false');
     localStorage.removeItem('refreshed');
+    localStorage.removeItem('name');
+    localStorage.removeItem('email');
+    localStorage.removeItem('email_verified_at');
+    localStorage.removeItem('avatar');
     this.router.navigate(['h']);
   }
 }

@@ -49,8 +49,16 @@ export class SettingsComponent implements OnInit {
     this.colorSchemeService.update('dark');
   }
 
+  logOut(): void {
+    this.authenticationService.logOut();
+    console.log('User Log out.');
+  }
+
+  toProfile(): void {
+    this.router.navigate(['profile']);
+  }
+
   /*
-  do tego jeszcze nie ma api
   changeEmail(user: any): void {
     this.userSettingsService.update(this.userID, user);
   }

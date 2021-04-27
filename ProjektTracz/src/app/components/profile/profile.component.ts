@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {Router} from '@angular/router';
 import {User} from '../../shared/_models/User';
+import {UserService} from '../../_services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,13 +17,14 @@ export class ProfileComponent implements OnInit {
   profileUserModel = new User('', '', '', '');
 
   constructor(private authenticationService: AuthenticationService,
-              private router: Router) {
-    this.token = localStorage.getItem('token');
-    this.authenticationService.getUserInfo(this.profileUserModel);
+              private router: Router,
+              private userService: UserService) {
     this.user = localStorage.getItem('name');
+    this.authenticationService.getUserInfo(this.profileUserModel);
+    this.token = localStorage.getItem('token');
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void{
     document.body.removeAttribute('.modal-open');
   }
 
