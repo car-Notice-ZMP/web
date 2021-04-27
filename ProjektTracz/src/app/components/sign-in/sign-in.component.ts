@@ -11,7 +11,6 @@ import {Login} from '../../shared/_models/Login';
 export class SignInComponent implements OnInit {
 
   signInUserModel = new Login('', '');
-  checked = false;
   hide = true;
 
   constructor(private authenticationService: AuthenticationService,

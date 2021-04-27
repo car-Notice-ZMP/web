@@ -11,7 +11,6 @@ import {AuthenticationService} from '../../_services/authentication.service';
 export class SignUpComponent implements OnInit {
 
   signUpUserModel = new Register('', '', '', '');
-  checked = false;
   hide = true;
 
   constructor(private router: Router,

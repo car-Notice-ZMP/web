@@ -14,6 +14,7 @@ export class AppComponent {
     public authenticationService: AuthenticationService
   ) {
   }
+
   ngAfterViewChecked(): void {
     this.changeDetector.detectChanges();
   }

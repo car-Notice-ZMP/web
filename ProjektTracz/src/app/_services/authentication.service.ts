@@ -26,15 +26,13 @@ export class AuthenticationService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-
   openSnackBar(message: string, action: string): void {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
   }
 
-  // tslint:disable-next-line:typedef
-  SignUp(user: Register) {
+  SignUp(user: Register): Subscription {
     return this.userService.register(user).subscribe(
       response => {
         this.openSnackBar('User registered successfully', '');
@@ -53,10 +51,7 @@ export class AuthenticationService {
   SignIn(user: Login): Subscription {
     return this.userService.login(user).subscribe(
       response => {
-        // localStorage.setItem('socialLogin', 'false');
-        console.log(response);
         localStorage.setItem('token', response.access_token);
-        localStorage.setItem('isLoggedIn', 'true');
         console.log('User signed in. ');
         this.openSnackBar('User signed successfully', '');
         this.router.navigate(['profile']);
@@ -67,14 +62,28 @@ export class AuthenticationService {
     );
   }
 
-  getUserInfo(user: User): void {
-    this.userService.getUser().subscribe(
+  // tslint:disable-next-line:typedef
+  loggedIn() {
+    return !!localStorage.getItem('token');
+  }
+
+  // tslint:disable-next-line:typedef
+  getToken() {
+    return localStorage.getItem('token');
+  }
+
+  // tslint:disable-next-line:typedef
+  getUserInfo(user: User) {
+    return this.userService.getUser().subscribe(
       res => {
-        console.log(res);
-        localStorage.getItem('name');
-        localStorage.getItem('email');
-        localStorage.getItem('email_verified_at');
-        localStorage.getItem('avatar');
+        // @ts-ignore
+        localStorage.setItem('name', res.message.name);
+        // @ts-ignore
+        localStorage.setItem('email', res.message.email);
+        // @ts-ignore
+        localStorage.setItem('email_verified_at', res.message.email_verified_at);
+        // @ts-ignore
+        localStorage.setItem('avatar', res.message.avatar);
       },
       err => {
         console.log(err);

@@ -15,6 +15,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import {UserService} from './_services/user.service';
+import {AuthGuard} from './_helpers/auth.guard';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {UserService} from './_services/user.service';
   ],
   providers: [
     AuthenticationService,
+    AuthGuard,
     UserService,
     {
       provide: HTTP_INTERCEPTORS,
