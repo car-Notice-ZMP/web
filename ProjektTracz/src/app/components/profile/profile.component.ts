@@ -2,7 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {Router} from '@angular/router';
 import {User} from '../../shared/_models/User';
-import {UserService} from '../../_services/user.service';
+import {MatDialog} from '@angular/material/dialog';
+import {CreateNoticeComponent} from '../../dialogs/create-notice/create-notice.component';
+import {UserSettingsService} from '../../_services/user.settings.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,10 +20,14 @@ export class ProfileComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
-              private userService: UserService) {
+              private dialog: MatDialog) {
     this.user = localStorage.getItem('name');
     this.authenticationService.getUserInfo(this.profileUserModel);
     this.token = localStorage.getItem('token');
+    this.authenticationService.userObservable.subscribe(
+      user => {
+        this.user = user.name;
+      });
   }
 
   ngOnInit(): void{
@@ -36,5 +42,10 @@ export class ProfileComponent implements OnInit {
   toSettings(): void {
     this.router.navigate(['s']);
   }
+
+  toCreateNotice(): void {
+    this.dialog.open(CreateNoticeComponent, {});
+  }
+
 
 }

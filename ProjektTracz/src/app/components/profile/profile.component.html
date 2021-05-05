@@ -2,13 +2,15 @@
 <mat-toolbar>
   <span>Notice My Car</span>
   <span class="spacer"></span>
+  <span><button mat-raised-button color="accent" (click)="toCreateNotice()">Stwórz Ogłoszenie</button></span>
+  <span class="small-spacer"></span>
   <span><button mat-raised-button color="accent" (click)="toSettings()">Ustawienia</button></span>
   <span class="small-spacer"></span>
   <span><button mat-raised-button color="accent" (click)="logOut()">Wyloguj się</button></span>
 </mat-toolbar>
 <body fxFill class="mat-app-background" fxLayoutAlign="center center">
 
-<div fxLayoutAlign="center center" fxLayout="column">
+<div fxLayoutAlign="center" fxLayout="column">
   <h1>Witaj {{user}}! </h1>
 </div>
 </body>

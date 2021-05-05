@@ -41,10 +41,10 @@ export class SocialService {
         this.subscribeSocial();
         const promise = new Promise((resolve, reject) => {
           setTimeout(() => {
-            this.authenticationService.SignIn(this.login);
+            this.authenticationService.QuietlySignIn(this.login);
           }, 100);
         });
-        this.authenticationService.SignUp(this.newUser);
+        this.authenticationService.QuietlySignUp(this.newUser);
         promise.then(value => {
           console.log(value);
         });

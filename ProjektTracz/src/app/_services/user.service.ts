@@ -23,14 +23,6 @@ export class UserService {
     return this.http.get<User>('https://citygame.ga/api/auth/profile', {headers: {Authorization: `Bearer ${this.token}`}});
   }
 
-  // do tej funkcji nie widziałem puta w Insomnii
-  editUser(user: User): Observable<any> {
-    return this.http.put('https://citygame.ga/api/auth/profile/${user._id}', user, {responseType: 'text'});
-  }
 
-  // do tej też
-  deleteUser(user: User): Observable<any> {
-    return this.http.delete('https://citygame.ga/api/auth/profile/${user._id}', {responseType: 'text'});
-  }
 
 }

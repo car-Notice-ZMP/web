@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, Subscription} from 'rxjs';
+import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import {Login} from '../shared/_models/Login';
 import {Register} from '../shared/_models/Register';
 import {Router} from '@angular/router';
@@ -16,6 +16,9 @@ export class AuthenticationService {
   public currentUser: Observable<Login>;
   user: any;
   token: string;
+  userSource = new Subject<User>();
+  userObservable = this.userSource.asObservable();
+  userID = localStorage.getItem('userID');
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -48,6 +51,19 @@ export class AuthenticationService {
 
   }
 
+  QuietlySignUp(user: Register): Subscription {
+    return this.userService.register(user).subscribe(
+      response => {
+        console.log('User Signed Up');
+        localStorage.setItem('token', response.token);
+      },
+      error => {
+        console.log('Error:', error.status, error.statusText);
+      }
+    );
+
+  }
+
   SignIn(user: Login): Subscription {
     return this.userService.login(user).subscribe(
       response => {
@@ -62,6 +78,21 @@ export class AuthenticationService {
     );
   }
 
+  QuietlySignIn(user: Login): Subscription {
+    return this.userService.login(user).subscribe(
+      response => {
+        localStorage.setItem('token', response.access_token);
+        this.loggedIn();
+        console.log('User signed in. ');
+        this.router.navigate(['profile']);
+      },
+      error => {
+        this.openSnackBar('Something went wrong', '');
+        console.log('Error:', error);
+      }
+    );
+  }
+
   // tslint:disable-next-line:typedef
   loggedIn() {
     return !!localStorage.getItem('token');
@@ -70,6 +101,10 @@ export class AuthenticationService {
   // tslint:disable-next-line:typedef
   getToken() {
     return localStorage.getItem('token');
+  }
+
+  setUser(user: User): void {
+    this.userSource.next(user);
   }
 
   // tslint:disable-next-line:typedef
