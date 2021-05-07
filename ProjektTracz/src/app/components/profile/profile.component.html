@@ -32,12 +32,8 @@
         </mat-card-content>
         <img mat-card-image src={{card.image_url}} class="imageLimiter">
         <mat-card-actions>
-          <button>
-
-          </button>
-          <button>
-
-          </button>
+          <span><button mat-raised-button color="accent" (click)="toShowFullInformation()">Więcej</button></span>
+          <span><button mat-raised-button color="accent" (click)="toFavourites()">Obserwuj</button></span>
         </mat-card-actions>
       </mat-card>
     </div>

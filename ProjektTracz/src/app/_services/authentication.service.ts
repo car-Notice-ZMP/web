@@ -5,9 +5,9 @@ import {Login} from '../shared/_models/Login';
 import {Register} from '../shared/_models/Register';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {UserService} from './user.service';
 import {User} from '../shared/_models/User';
+import {SnackBar} from '../shared/helpers/snackbar.helper';
 
 
 @Injectable({providedIn: 'root'})
@@ -23,28 +23,20 @@ export class AuthenticationService {
   constructor(private http: HttpClient,
               private router: Router,
               public dialog: MatDialog,
-              private snackBar: MatSnackBar,
+              private snackBar: SnackBar,
               private userService: UserService) {
     this.currentUserSubject = new BehaviorSubject<Login>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  openSnackBar(message: string, action: string): void {
-    this.snackBar.open(message, action, {
-      duration: 2000,
-    });
-  }
-
   SignUp(user: Register): Subscription {
     return this.userService.register(user).subscribe(
       response => {
-        this.openSnackBar('User registered successfully', '');
-        console.log('User Signed Up');
-        console.log(response);
+        this.snackBar.open('Zarejestrowano prawidłowo', 'X');
         localStorage.setItem('token', response.token);
       },
       error => {
-        this.openSnackBar('Something went wrong', '');
+        this.snackBar.open('Coś poszło nie tak', 'X');
         console.log('Error:', error.status, error.message);
       }
     );
@@ -54,7 +46,6 @@ export class AuthenticationService {
   QuietlySignUp(user: Register): Subscription {
     return this.userService.register(user).subscribe(
       response => {
-        console.log('User Signed Up');
         localStorage.setItem('token', response.token);
       },
       error => {
@@ -69,11 +60,11 @@ export class AuthenticationService {
       response => {
         localStorage.setItem('token', response.access_token);
         console.log('User signed in. ');
-        this.openSnackBar('User signed successfully', '');
+        this.snackBar.open('Zalogowano pomyślnie', 'X');
         this.router.navigate(['profile']);
       },
       error => {
-        this.openSnackBar('Something went wrong', '');
+        this.snackBar.open('Nieprawidłowy login lub hasło! ', 'X');
       }
     );
   }
@@ -83,11 +74,10 @@ export class AuthenticationService {
       response => {
         localStorage.setItem('token', response.access_token);
         this.loggedIn();
-        console.log('User signed in. ');
         this.router.navigate(['profile']);
       },
       error => {
-        this.openSnackBar('Something went wrong', '');
+        this.snackBar.open('Coś poszło nie tak', 'X');
         console.log('Error:', error);
       }
     );

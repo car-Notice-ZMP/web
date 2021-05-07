@@ -20,6 +20,7 @@ import {GoogleComponent} from './components/google/google.component';
 import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from 'angularx-social-login';
 import { CreateNoticeComponent } from './dialogs/create-notice/create-notice.component';
 import { FullInformationComponent } from './dialogs/full-information/full-information.component';
+import {SnackBar} from './shared/helpers/snackbar.helper';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { FullInformationComponent } from './dialogs/full-information/full-inform
     AuthenticationService,
     AuthGuard,
     UserService,
+    SnackBar,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {CreateNoticeComponent} from '../../dialogs/create-notice/create-notice.component';
 import {NoticeService} from '../../_services/notice.service';
 import {ResponseNotice} from '../../shared/_models/ResponseNotice';
+import {FullInformationComponent} from '../../dialogs/full-information/full-information.component';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class ProfileComponent implements OnInit {
     '',
     '',
     [],
+    '',
     '');
   noticeArray: Array<ResponseNotice>;
 
@@ -42,7 +44,7 @@ export class ProfileComponent implements OnInit {
     this.authenticationService.getUserInfo(this.profileUserModel);
     this.token = localStorage.getItem('token');
     this.noticeService.showAllNotices().toPromise()
-      .then( response => {
+      .then(response => {
         console.log(response['All_notices']);
         this.noticeArray = [];
         this.noticeArray = response['All_notices'];
@@ -53,7 +55,7 @@ export class ProfileComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     document.body.removeAttribute('.modal-open');
   }
 
@@ -68,6 +70,14 @@ export class ProfileComponent implements OnInit {
 
   toCreateNotice(): void {
     this.dialog.open(CreateNoticeComponent, {});
+  }
+
+  toShowFullInformation(): void {
+    this.dialog.open(FullInformationComponent, {});
+  }
+
+  toFavourites(): void {
+
   }
 
 

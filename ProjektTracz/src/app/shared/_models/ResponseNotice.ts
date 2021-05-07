@@ -14,6 +14,7 @@ export class ResponseNotice {
   price: string;
   statuses: Array<Status>;
   year: string;
+  id: string;
 
   constructor(title: string,
               author_avatar: any,
@@ -27,7 +28,8 @@ export class ResponseNotice {
               notice_author_email: string,
               price: string,
               statuses: Array<Status>,
-              year: string) {
+              year: string,
+              id: string) {
     this.title = title;
     this.author_avatar = author_avatar;
     this.body = body;
@@ -41,5 +43,6 @@ export class ResponseNotice {
     this.price = price;
     this.statuses = statuses;
     this.year = year;
+    this.id = id;
   }
 }
