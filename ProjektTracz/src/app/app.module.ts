@@ -19,6 +19,7 @@ import {AuthGuard} from './_helpers/auth.guard';
 import {GoogleComponent} from './components/google/google.component';
 import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from 'angularx-social-login';
 import { CreateNoticeComponent } from './dialogs/create-notice/create-notice.component';
+import { FullInformationComponent } from './dialogs/full-information/full-information.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { CreateNoticeComponent } from './dialogs/create-notice/create-notice.com
     SettingsComponent,
     GoogleComponent,
     CreateNoticeComponent,
+    FullInformationComponent,
   ],
   imports: [
     BrowserModule,

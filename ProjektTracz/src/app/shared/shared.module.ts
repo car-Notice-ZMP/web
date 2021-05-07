@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { LoadingComponent } from './loading/loading.component';
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -18,11 +16,8 @@ import { LoadingComponent } from './loading/loading.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    // Shared Components
-    LoadingComponent
   ],
   declarations: [
-    LoadingComponent
   ]
 })
 export class SharedModule { }

@@ -8,10 +8,44 @@
   <span class="small-spacer"></span>
   <span><button mat-raised-button color="accent" (click)="logOut()">Wyloguj się</button></span>
 </mat-toolbar>
-<body fxFill class="mat-app-background" fxLayoutAlign="center center">
-
-<div fxLayoutAlign="center" fxLayout="column">
+<mat-toolbar fxLayoutAlign="center" color='accent' fxLayout="column">
   <h1>Witaj {{user}}! </h1>
-</div>
+</mat-toolbar>
+<body class="mat-app-background" fxFill fxLayoutAlign="center" >
+  <div fxLayoutGap="16px grid" fxLayout="left wrap" fxFlex="70">
+    <div *ngFor="let card of noticeArray" fxLayout="row" class="card-padding">
+      <br>
+      <mat-card class="card-wrapper" >
+        <mat-card-title>
+          {{card.title}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Autor: {{card.notice_author}}
+        </mat-card-subtitle>
+        <mat-card-subtitle>
+          Email: {{card.notice_author_email}}
+        </mat-card-subtitle>
+        <mat-card-content>
+          <h4>Marka: {{card.mark}}</h4>
+          <h4>Model: {{card.model}}</h4>
+          <h4>Przebieg: {{card.mileage}}</h4>
+        </mat-card-content>
+        <img mat-card-image src={{card.image_url}} class="imageLimiter">
+        <mat-card-actions>
+          <button>
+
+          </button>
+          <button>
+
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+  </div>
 </body>
+<footer fxLayoutAlign="center">
+  <p></p>
+  <p>Car-NoticeZMP</p>
+</footer>
 </html>

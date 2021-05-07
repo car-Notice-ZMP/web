@@ -26,6 +26,7 @@
     "@auth0/auth0-angular": "^1.4.1",
     "angularx-social-login": "^3.5.4",
     "flex-layout": "^1.0.1",
+    "igniteui-angular": "^11.1.9",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

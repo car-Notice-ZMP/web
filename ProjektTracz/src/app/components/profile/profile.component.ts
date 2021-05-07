@@ -4,7 +4,9 @@ import {Router} from '@angular/router';
 import {User} from '../../shared/_models/User';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateNoticeComponent} from '../../dialogs/create-notice/create-notice.component';
-import {UserSettingsService} from '../../_services/user.settings.service';
+import {NoticeService} from '../../_services/notice.service';
+import {ResponseNotice} from '../../shared/_models/ResponseNotice';
+
 
 @Component({
   selector: 'app-profile',
@@ -17,13 +19,34 @@ export class ProfileComponent implements OnInit {
   token: string;
   user: string;
   profileUserModel = new User('', '', '', '');
+  card = new ResponseNotice('',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    [],
+    '');
+  noticeArray: Array<ResponseNotice>;
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private noticeService: NoticeService) {
     this.user = localStorage.getItem('name');
     this.authenticationService.getUserInfo(this.profileUserModel);
     this.token = localStorage.getItem('token');
+    this.noticeService.showAllNotices().toPromise()
+      .then( response => {
+        console.log(response['All_notices']);
+        this.noticeArray = [];
+        this.noticeArray = response['All_notices'];
+      });
     this.authenticationService.userObservable.subscribe(
       user => {
         this.user = user.name;

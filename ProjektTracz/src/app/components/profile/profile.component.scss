@@ -1,6 +1,22 @@
 .spacer{
   flex: 100 1 auto;
 }
+
 .small-spacer{
   flex: 8px;
+}
+
+.card-padding{
+  padding: 16px 16px 16px 16px;
+}
+
+.card-wrapper {
+  max-width: 320px;
+  min-width: 220px;
+}
+
+.imageLimiter{
+  padding: 10px 10px 10px 10px;
+  max-width: 230px;
+  min-width: auto;
 }
