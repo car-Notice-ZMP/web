@@ -13,14 +13,15 @@ import {JwtInterceptor} from './_helpers/jwt.interceptor';
 import {SignInComponent} from './components/sign-in/sign-in.component';
 import {SignUpComponent} from './components/sign-up/sign-up.component';
 import {ProfileComponent} from './components/profile/profile.component';
-import {SettingsComponent} from './components/settings/settings.component';
 import {UserService} from './_services/user.service';
 import {AuthGuard} from './_helpers/auth.guard';
 import {GoogleComponent} from './components/google/google.component';
 import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from 'angularx-social-login';
-import { CreateNoticeComponent } from './dialogs/create-notice/create-notice.component';
-import { FullInformationComponent } from './dialogs/full-information/full-information.component';
+import { CreateNoticeComponent } from './components/create-notice/create-notice.component';
+import { FullInformationComponent } from './components/full-information/full-information.component';
 import {SnackBar} from './shared/helpers/snackbar.helper';
+import { FavouritesComponent } from './components/favourites/favourites.component';
+import { SendMessageComponent } from './dialogs/send-message/send-message.component';
 
 @NgModule({
   declarations: [
@@ -29,10 +30,11 @@ import {SnackBar} from './shared/helpers/snackbar.helper';
     SignInComponent,
     SignUpComponent,
     ProfileComponent,
-    SettingsComponent,
     GoogleComponent,
     CreateNoticeComponent,
     FullInformationComponent,
+    FavouritesComponent,
+    SendMessageComponent,
   ],
   imports: [
     BrowserModule,

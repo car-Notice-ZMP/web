@@ -1,0 +1,156 @@
+<mat-toolbar>
+  <span>Notice My Car</span>
+  <span class="spacer"></span>
+  <span><button mat-raised-button color="accent" (click)="toFavourites()">Obserwowane</button></span>
+  <span class="small-spacer"></span>
+  <span><button mat-raised-button color="accent" (click)="toAllNotices()">Wszystkie</button></span>
+  <span class="small-spacer"></span>
+  <span><button mat-raised-button color="accent" (click)="logOut()">Wyloguj się</button></span>
+</mat-toolbar>
+<div fxLayout="column" fxLayoutGap="2%" fxLayoutAlign="center center">
+  <h2>Dodaj ogłoszenie! </h2>
+  <div fxLayout="row" fxLayoutAlign="left wrap">
+    <div fxLayout="column" fxLayoutGap="5%" fxLayoutAlign="left center">
+      <mat-form-field appearance="fill">
+        <mat-label>Tytuł ogłoszenia</mat-label>
+        <input required matInput [(ngModel)]="noticeModel.title">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Dodatkowe informacje</mat-label>
+        <input matInput [(ngModel)]="noticeModel.content">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Marka</mat-label>
+        <input matInput [(ngModel)]="noticeModel.mark">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="padding-fix">
+        <mat-label>Model</mat-label>
+        <input matInput [(ngModel)]="noticeModel.model">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Kolor pojazdu</mat-label>
+        <input matInput [(ngModel)]="noticeModel.color">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Typ Nadwozia</mat-label>
+        <input matInput [(ngModel)]="noticeModel.body">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Przebieg</mat-label>
+        <input matInput [(ngModel)]="noticeModel.mileage">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Rocznik</mat-label>
+        <input matInput [(ngModel)]="noticeModel.year">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="padding-fix">
+        <mat-label>Cena</mat-label>
+        <input matInput [(ngModel)]="noticeModel.price">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field>
+        <div>
+          <mat-toolbar>
+            <input matInput [(ngModel)]="fileAttr" readonly name="name" />
+            <button mat-raised-button color="primary">
+              Zdjęcie
+            </button>
+          </mat-toolbar>
+          <input type="file"
+                 #fileInput id="uploadFile"
+                 (change)="uploadFileEvt($event)"
+                 name="uploadFile"
+                 multiple="multiple"
+                 accept="image/*" />
+        </div>
+      </mat-form-field>
+      <div fxLayoutGap="10%" fxLayout="column">
+        <button fxFill mat-raised-button (click)="storeNotice()" type="submit">Wyślij ogłoszenie</button>
+      </div>
+    </div>
+  </div>
+  <!--<div fxLayout="row" fxLayoutGap="5%">
+    <div fxLayout="column" fxLayoutGap="5%" fxLayoutAlign="left center">
+      <mat-form-field appearance="fill">
+        <mat-label>Tytuł ogłoszenia</mat-label>
+        <input required matInput [(ngModel)]="noticeModel.title">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Dodatkowe informacje</mat-label>
+        <input matInput [(ngModel)]="noticeModel.content">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Marka</mat-label>
+        <input matInput [(ngModel)]="noticeModel.mark">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="padding-fix">
+        <mat-label>Model</mat-label>
+        <input matInput [(ngModel)]="noticeModel.model">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field appearance="fill" >
+        <mat-label>Kolor pojazdu</mat-label>
+        <input matInput [(ngModel)]="noticeModel.color">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <div fxLayoutGap="10%" fxLayout="column">
+        <button fxFill mat-raised-button (click)="storeNotice()" type="submit">Wyślij ogłoszenie</button>
+      </div>
+    </div>
+    <div fxLayout="column" fxLayoutGap="5%" fxLayoutAlign="right center">
+      <mat-form-field appearance="fill">
+        <mat-label>Typ Nadwozia</mat-label>
+        <input matInput [(ngModel)]="noticeModel.body">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Przebieg</mat-label>
+        <input matInput [(ngModel)]="noticeModel.mileage">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Rocznik</mat-label>
+        <input matInput [(ngModel)]="noticeModel.year">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="padding-fix">
+        <mat-label>Cena</mat-label>
+        <input matInput [(ngModel)]="noticeModel.price">
+        <button matSuffix mat-icon-button disabled></button>
+      </mat-form-field>
+      <mat-form-field>
+        <div>
+          <mat-toolbar>
+            <input matInput [(ngModel)]="fileAttr" readonly name="name" />
+            <button mat-raised-button color="primary">
+              Zdjęcie
+            </button>
+          </mat-toolbar>
+          <input type="file"
+                 #fileInput id="uploadFile"
+                 (change)="uploadFileEvt($event)"
+                 name="uploadFile"
+                 multiple="multiple"
+                 accept="image/*" />
+        </div>
+      </mat-form-field>
+      <div fxLayoutGap="10%" fxLayout="column" >
+        <button mat-raised-button (click)="close()">Wróć</button>
+      </div>
+    </div>
+  </div>-->
+</div>
+
+

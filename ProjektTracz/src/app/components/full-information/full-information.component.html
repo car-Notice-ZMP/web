@@ -1,0 +1,56 @@
+<mat-toolbar>
+  <span>Notice My Car</span>
+  <span class="spacer"></span>
+  <span><button mat-raised-button color="accent" (click)="toCreateNotice()">Stwórz Ogłoszenie</button></span>
+  <span class="small-spacer"></span>
+  <span><button mat-raised-button color="accent" (click)="toFavourites()">Obserwowane</button></span>
+  <span class="small-spacer"></span>
+  <span><button mat-raised-button color="accent" (click)="toNotices()">Wszystkie</button></span>
+  <span class="small-spacer"></span>
+  <span><button mat-raised-button color="accent" (click)="logOut()">Wyloguj się</button></span>
+</mat-toolbar>
+<body class="mat-app-background" fxFill fxLayoutAlign="center">
+
+<div fxLayout="column" fxFlex="70" fxLayoutGap="30px" >
+  <div fxLayoutAlign="center">
+    <img alt="zdjęcie" class="imageLimiter" src={{card.image_url}}>
+  </div>
+  <div fxLayoutAlign="center"><h1>{{card.title}}</h1></div>
+  <div fxLayout="row" fxFlex="50" fxLayoutGap="30vw">
+    <div fxLayout="column">
+      <h4>Ogłoszenie wystawił: {{card.notice_author}}</h4>
+      <img alt="zdjęcie" class="avatarLimiter" src={{card.author_avatar}}>
+    </div>
+    <div fxLayout="column" fxLayoutGap="16px">
+      <h4>Rok produkcji: {{card.year}}</h4>
+      <h4>Przebieg: {{card.mileage}} km</h4>
+      <h4>Kategoria: {{card.body}}</h4>
+      <h4>Marka: {{card.mark}}</h4>
+      <h4>Model: {{card.model}}</h4>
+      <h4>Cena: {{card.price}} zł</h4>
+    </div>
+  </div>
+
+  <div  fxLayoutGap="16px" fxLayout="column">
+    <h1 fxLayoutAlign="center">Napisz wiadomość do autora ogłoszenia</h1>
+    <mat-form-field appearance="fill">
+      <mat-label>Tytuł wiadomości</mat-label>
+      <input required matInput [(ngModel)]="mailer.title">
+      <button matSuffix mat-icon-button disabled></button>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Treść</mat-label>
+      <textarea required matInput [(ngModel)]="mailer.content" class="formfieldResizer">    </textarea>
+    </mat-form-field>
+    <div fxLayoutGap="10%" fxLayout="column">
+      <button fxFill mat-raised-button (click)="sendEmail()" type="submit">Wyślij</button>
+    </div>
+  </div>
+
+
+
+
+</div>
+
+</body>
+

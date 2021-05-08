@@ -1,0 +1,25 @@
+.spacer{
+  flex: 100 1 auto;
+}
+
+.small-spacer{
+  flex: 8px;
+}
+
+.imageLimiter{
+  padding: 10px 10px 10px 10px;
+  max-width: 500px;
+  min-width: 200px;
+  max-height: 280px;
+  min-height: 120px;
+}
+
+.avatarLimiter{
+  padding: 10px 10px 10px 10px;
+  width: 120px;
+  height: 120px;
+}
+
+.formfieldResizer{
+  height: 150px;
+}

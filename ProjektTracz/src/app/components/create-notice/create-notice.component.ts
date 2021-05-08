@@ -2,7 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Notice} from '../../shared/_models/Notice';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {NoticeService} from '../../_services/notice.service';
-import {MatDialog} from '@angular/material/dialog';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-create-category',
@@ -27,7 +27,7 @@ export class CreateNoticeComponent {
 
   constructor(private authenticationService: AuthenticationService,
               private noticeService: NoticeService,
-              private dialog: MatDialog) {
+              private router: Router) {
   }
 
   storeNotice(): void {
@@ -35,11 +35,6 @@ export class CreateNoticeComponent {
     this.noticeService.storeNotice();
     console.log('poszło');
   }
-
-  close(): void {
-    this.dialog.closeAll();
-  }
-
 
   // tslint:disable-next-line:typedef
   uploadFileEvt(imgFile: any) {
@@ -65,5 +60,18 @@ export class CreateNoticeComponent {
     } else {
       this.fileAttr = 'Choose File';
     }
+  }
+
+  toFavourites(): void {
+    this.router.navigate(['fav']);
+  }
+
+  logOut(): void{
+    this.authenticationService.logOut();
+    this.router.navigate(['h']);
+  }
+
+  toAllNotices(): void {
+    this.router.navigate(['profile']);
   }
 }

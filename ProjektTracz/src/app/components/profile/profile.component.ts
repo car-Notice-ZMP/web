@@ -3,10 +3,11 @@ import {AuthenticationService} from '../../_services/authentication.service';
 import {Router} from '@angular/router';
 import {User} from '../../shared/_models/User';
 import {MatDialog} from '@angular/material/dialog';
-import {CreateNoticeComponent} from '../../dialogs/create-notice/create-notice.component';
 import {NoticeService} from '../../_services/notice.service';
 import {ResponseNotice} from '../../shared/_models/ResponseNotice';
-import {FullInformationComponent} from '../../dialogs/full-information/full-information.component';
+import {FullInformationComponent} from '../full-information/full-information.component';
+import {Searchable} from '../../shared/_models/Searchable';
+import {NoticeInfoService} from '../../_services/notice.info.service';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class ProfileComponent implements OnInit {
   userID: string;
   token: string;
   user: string;
+  hide: true;
   profileUserModel = new User('', '', '', '');
   card = new ResponseNotice('',
     '',
@@ -35,17 +37,34 @@ export class ProfileComponent implements OnInit {
     '',
     '');
   noticeArray: Array<ResponseNotice>;
+  searchbar = new Searchable('',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '');
+
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
               private dialog: MatDialog,
-              private noticeService: NoticeService) {
+              private noticeService: NoticeService,
+              private noticeInfoService: NoticeInfoService) {
     this.user = localStorage.getItem('name');
     this.authenticationService.getUserInfo(this.profileUserModel);
     this.token = localStorage.getItem('token');
     this.noticeService.showAllNotices().toPromise()
       .then(response => {
-        console.log(response['All_notices']);
         this.noticeArray = [];
         this.noticeArray = response['All_notices'];
       });
@@ -57,6 +76,9 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     document.body.removeAttribute('.modal-open');
+    if (this.searchbar) {
+
+    }
   }
 
   logOut(): void {
@@ -64,21 +86,26 @@ export class ProfileComponent implements OnInit {
     console.log('User Log out.');
   }
 
-  toSettings(): void {
-    this.router.navigate(['s']);
-  }
-
   toCreateNotice(): void {
-    this.dialog.open(CreateNoticeComponent, {});
+    this.router.navigate(['create']);
   }
 
-  toShowFullInformation(): void {
-    this.dialog.open(FullInformationComponent, {});
+  toShowFullInformation(card: ResponseNotice): void {
+    this.noticeInfoService.changeNotice(card);
+    console.log(card);
+    this.router.navigate(['info']);
   }
 
   toFavourites(): void {
+    this.router.navigate(['fav']);
+  }
+
+  search(): void {
 
   }
 
 
+  addToFavourites(id: string): void {
+
+  }
 }

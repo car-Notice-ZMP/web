@@ -17,7 +17,14 @@
 
 .imageLimiter{
   padding: 10px 10px 10px 10px;
-  max-width: 230px;
-  min-width: auto;
-  max-height: 200px;
+  width: 230px;
+  height: 120px;
+}
+
+.reshaper{
+  height: 100px;
+}
+
+.padder{
+  padding: 12px 12px 12px 12px;
 }
