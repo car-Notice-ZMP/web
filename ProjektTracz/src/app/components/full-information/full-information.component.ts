@@ -1,8 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ResponseNotice} from '../../shared/_models/ResponseNotice';
 import {NoticeService} from '../../_services/notice.service';
-import {sendMessageToMaster} from '@angular/compiler-cli/ngcc/src/execution/cluster/utils';
-import {SendMessageComponent} from '../../dialogs/send-message/send-message.component';
 import {MatDialog} from '@angular/material/dialog';
 import {NoticeInfoService} from '../../_services/notice.info.service';
 import {AuthenticationService} from '../../_services/authentication.service';
@@ -55,10 +53,6 @@ export class FullInformationComponent implements OnInit, OnDestroy {
 
   toFavourites(): void {
 
-  }
-
-  toSendMessage(): void {
-    this.dialog.open(SendMessageComponent, {});
   }
 
   logOut(): void {

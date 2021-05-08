@@ -21,7 +21,6 @@ import { CreateNoticeComponent } from './components/create-notice/create-notice.
 import { FullInformationComponent } from './components/full-information/full-information.component';
 import {SnackBar} from './shared/helpers/snackbar.helper';
 import { FavouritesComponent } from './components/favourites/favourites.component';
-import { SendMessageComponent } from './dialogs/send-message/send-message.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +33,6 @@ import { SendMessageComponent } from './dialogs/send-message/send-message.compon
     CreateNoticeComponent,
     FullInformationComponent,
     FavouritesComponent,
-    SendMessageComponent,
   ],
   imports: [
     BrowserModule,
