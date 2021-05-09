@@ -1,6 +1,13 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SignInComponent } from './sign-in.component';
+import {SignInComponent} from './sign-in.component';
+import {AuthenticationService} from '../../_services/authentication.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MaterialModule} from '../../material.module';
+import {RouterTestingModule} from '@angular/router/testing';
+import {HttpClientModule} from '@angular/common/http';
+import {UserService} from '../../_services/user.service';
+
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
@@ -8,9 +15,11 @@ describe('SignInComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SignInComponent ]
+      declarations: [SignInComponent],
+      imports: [RouterTestingModule, BrowserAnimationsModule, MaterialModule, HttpClientModule],
+      providers: [AuthenticationService, UserService]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
