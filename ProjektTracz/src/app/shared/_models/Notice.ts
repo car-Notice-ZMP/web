@@ -1,6 +1,6 @@
 export class Notice {
   title: string;
-  content: string;
+  message: string;
   image: any;
   mark: string;
   model: string;
@@ -10,19 +10,9 @@ export class Notice {
   price: string;
   year: string;
 
-  constructor(title: string,
-              content: string,
-              image: any,
-              mark: string,
-              model: string,
-              color: string,
-              body: string,
-              mileage: string,
-              price: string,
-              year: string) {
-
+  constructor(title: string, message: string, image: any, mark: string, model: string, color: string, body: string, mileage: string, price: string, year: string) {
     this.title = title;
-    this.content = content;
+    this.message = message;
     this.image = image;
     this.mark = mark;
     this.model = model;

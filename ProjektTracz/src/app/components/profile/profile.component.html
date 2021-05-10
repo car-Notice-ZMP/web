@@ -3,8 +3,6 @@
   <span class="spacer"></span>
   <span><button mat-raised-button color="accent" (click)="toCreateNotice()">Stwórz Ogłoszenie</button></span>
   <span class="small-spacer"></span>
-  <span><button mat-raised-button color="accent" (click)="toFavourites()">Obserwowane</button></span>
-  <span class="small-spacer"></span>
   <span><button mat-raised-button color="accent" (click)="logOut()">Wyloguj się</button></span>
 </mat-toolbar>
 <mat-toolbar class="reshaper" fxLayoutAlign="space-between" color='accent' fxLayout="row">
@@ -25,7 +23,8 @@
 <div fxLayoutGap="16px grid" fxLayout="center wrap" fxFlex="75" class="card-padding">
   <div *ngFor="let card of noticeArray" fxLayout="row" class="card-padding">
     <br>
-    <mat-card class="card-wrapper" *ngIf="card.statuses[0].name === 'aktywne'">
+<!--    *ngIf="card.statuses[0].name === 'aktywne'"-->
+    <mat-card class="card-wrapper" >
       <mat-card-title>
         {{card.title}}
       </mat-card-title>

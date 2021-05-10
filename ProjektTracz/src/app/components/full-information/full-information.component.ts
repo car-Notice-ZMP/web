@@ -6,8 +6,8 @@ import {NoticeInfoService} from '../../_services/notice.info.service';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
-import {MailTo} from '../../shared/_models/MailTo';
-import {SnackBar} from '../../shared/helpers/snackbar.helper';
+import {SnackBar} from '../../_helpers/snackbar.helper';
+import {User} from '../../shared/_models/User';
 
 @Component({
   selector: 'app-full-information',
@@ -29,9 +29,8 @@ export class FullInformationComponent implements OnInit, OnDestroy {
     [],
     '',
     '');
-  mailer = new MailTo('',
-    '',
-    '');
+  user = new User('', '', '', '');
+  content: string;
   noticeArray: Array<ResponseNotice>;
   noticeSubscription: Subscription;
 
@@ -42,17 +41,12 @@ export class FullInformationComponent implements OnInit, OnDestroy {
               private router: Router,
               private snackbar: SnackBar) {
     this.noticeSubscription = this.noticeInfoService.currentNotice.subscribe(response => {
-        this.card = response;
-        this.mailer.receiver = response.notice_author_email;
-      });
+      this.card = response;
+
+    });
   }
 
   ngOnInit(): void {
-  }
-
-
-  toFavourites(): void {
-
   }
 
   logOut(): void {
@@ -67,8 +61,8 @@ export class FullInformationComponent implements OnInit, OnDestroy {
     this.noticeSubscription.unsubscribe();
   }
 
-  sendEmail(): void {
-    this.noticeService.emailSender(this.mailer);
+  sendComment(): void {
+    this.noticeService.addComment(this.card.id, this.content);
     this.snackbar.open('Wiadomość wysłana pomyślnie!', 'X');
   }
 

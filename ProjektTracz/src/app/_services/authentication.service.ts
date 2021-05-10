@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {UserService} from './user.service';
 import {User} from '../shared/_models/User';
-import {SnackBar} from '../shared/helpers/snackbar.helper';
+import {SnackBar} from '../_helpers/snackbar.helper';
 
 
 @Injectable({providedIn: 'root'})
@@ -72,7 +72,7 @@ export class AuthenticationService {
   QuietlySignIn(user: Login): Subscription {
     return this.userService.login(user).subscribe(
       response => {
-        localStorage.setItem('token', response.access_token);
+        localStorage.setItem('token', response.idtoken);
         this.loggedIn();
         this.router.navigate(['profile']);
       },

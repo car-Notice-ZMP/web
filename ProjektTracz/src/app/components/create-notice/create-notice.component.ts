@@ -32,8 +32,12 @@ export class CreateNoticeComponent {
 
   storeNotice(): void {
     localStorage.getItem('token');
-    this.noticeService.storeNotice();
-    console.log('poszło');
+    this.noticeService.storeNotice(this.noticeModel).subscribe(
+      res => {
+        console.log(res);
+        console.log('poszło');
+      }
+    );
   }
 
   // tslint:disable-next-line:typedef
@@ -62,11 +66,7 @@ export class CreateNoticeComponent {
     }
   }
 
-  toFavourites(): void {
-    this.router.navigate(['fav']);
-  }
-
-  logOut(): void{
+  logOut(): void {
     this.authenticationService.logOut();
     this.router.navigate(['h']);
   }

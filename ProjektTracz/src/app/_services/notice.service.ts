@@ -5,6 +5,7 @@ import {Notice} from '../shared/_models/Notice';
 import {ResponseNotice} from '../shared/_models/ResponseNotice';
 import {Searchable} from '../shared/_models/Searchable';
 import {MailTo} from '../shared/_models/MailTo';
+import {FormGroup} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,8 @@ export class NoticeService {
   constructor(private http: HttpClient) {
   }
 
-  storeNotice(): Observable<Notice> {
-    return this.http.post<Notice>('https://citygame.ga/api/notices/store', {headers: {Authorization: `Bearer ${this.token}`}});
+  storeNotice(notice): any {
+    return this.http.post('https://citygame.ga/api/notices/store', notice, {headers: {Authorization: `Bearer ${this.token}`}});
   }
 
   showAllNotices(): Observable<Array<ResponseNotice>> {
@@ -40,7 +41,7 @@ export class NoticeService {
     ('https://citygame.ga/api/fav/' + id + '/store/', {headers: {Authorization: `Bearer ${this.token}`}});
   }
 
-  emailSender(mail: MailTo): Observable<MailTo> {
-    return this.http.post<MailTo>('https://citygame.ga/api/mail/send', mail, {headers: {Authorization: `Bearer ${this.token}`}});
+  addComment(id: string, comment): any {
+    return this.http.post('https://citygame.ga/api/comments/' + id + '/store', comment, {headers: {Authorization: `Bearer ${this.token}`}});
   }
 }

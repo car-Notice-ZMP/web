@@ -1,13 +1,12 @@
 <mat-toolbar>
   <span>Notice My Car</span>
   <span class="spacer"></span>
-  <span><button mat-raised-button color="accent" (click)="toFavourites()">Obserwowane</button></span>
-  <span class="small-spacer"></span>
   <span><button mat-raised-button color="accent" (click)="toAllNotices()">Wszystkie</button></span>
   <span class="small-spacer"></span>
   <span><button mat-raised-button color="accent" (click)="logOut()">Wyloguj się</button></span>
 </mat-toolbar>
-<div fxLayout="column" fxLayoutGap="2%" fxLayoutAlign="center center">
+<body class="mat-app-background" fxLayoutAlign="center center">
+<div fxLayout="column" fxLayoutGap="2%" fxLayoutAlign="center center" fxFlex="70">
   <h2>Dodaj ogłoszenie! </h2>
   <div fxLayout="row" fxLayoutAlign="left wrap">
     <div fxLayout="column" fxLayoutGap="5%" fxLayoutAlign="left center">
@@ -18,7 +17,7 @@
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Dodatkowe informacje</mat-label>
-        <input matInput [(ngModel)]="noticeModel.content">
+        <input matInput [(ngModel)]="noticeModel.message">
         <button matSuffix mat-icon-button disabled></button>
       </mat-form-field>
       <mat-form-field appearance="fill">
@@ -36,7 +35,6 @@
         <input matInput [(ngModel)]="noticeModel.color">
         <button matSuffix mat-icon-button disabled></button>
       </mat-form-field>
-
       <mat-form-field appearance="fill">
         <mat-label>Typ Nadwozia</mat-label>
         <input matInput [(ngModel)]="noticeModel.body">
@@ -78,6 +76,9 @@
       </div>
     </div>
   </div>
+</div>
+</body>
+
   <!--<div fxLayout="row" fxLayoutGap="5%">
     <div fxLayout="column" fxLayoutGap="5%" fxLayoutAlign="left center">
       <mat-form-field appearance="fill">
@@ -151,6 +152,5 @@
       </div>
     </div>
   </div>-->
-</div>
 
 
