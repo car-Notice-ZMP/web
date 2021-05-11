@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {Router} from '@angular/router';
-import {User} from '../../shared/_models/User';
 import {MatDialog} from '@angular/material/dialog';
 import {NoticeService} from '../../_services/notice.service';
 import {ResponseNotice} from '../../shared/_models/ResponseNotice';
 import {NoticeInfoService} from '../../_services/notice.info.service';
+import {UserService} from '../../_services/user.service';
 
 
 @Component({
@@ -13,17 +13,16 @@ import {NoticeInfoService} from '../../_services/notice.info.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
 
   userID: string;
   token: string;
   user: string;
   hide: true;
-  profileUserModel = new User('', '', '', '');
   card = new ResponseNotice('',
     '',
     '',
-    '',
+    null,
     '',
     '',
     '',
@@ -42,34 +41,32 @@ export class ProfileComponent implements OnInit {
               private router: Router,
               private dialog: MatDialog,
               private noticeService: NoticeService,
-              private noticeInfoService: NoticeInfoService) {
+              private noticeInfoService: NoticeInfoService,
+              private userService: UserService) {
     this.user = localStorage.getItem('name');
-    this.authenticationService.getUserInfo(this.profileUserModel);
+    this.authenticationService.getUserInfo();
     this.token = localStorage.getItem('token');
 
+    this.userService.getUser();
     this.authenticationService.userObservable.subscribe(
       user => {
         this.user = user.name;
-        console.log(user.name);
       });
-    this.noticeService.showAllNotices().toPromise()
+    this.showAllNotices();
+
+
+  }
+
+  async showAllNotices(): Promise<void> {
+    await this.noticeService.showAllNotices().toPromise()
       .then(res => {
         this.noticeArray = [];
         this.noticeArray = res['All_notices'];
-        console.log(res['All_notices']);
       });
-  }
-
-  ngOnInit(): void {
-    document.body.removeAttribute('.modal-open');
-    if (this.searchbar) {
-
-    }
   }
 
   logOut(): void {
     this.authenticationService.logOut();
-    console.log('User Log out.');
   }
 
   toCreateNotice(): void {
@@ -79,8 +76,5 @@ export class ProfileComponent implements OnInit {
   toShowFullInformation(card: ResponseNotice): void {
     this.noticeInfoService.changeNotice(card);
     this.router.navigate(['info']);
-  }
-
-  search(): void {
   }
 }

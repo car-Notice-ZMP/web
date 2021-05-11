@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {Register} from '../../shared/_models/Register';
 import {AuthenticationService} from '../../_services/authentication.service';
@@ -8,7 +8,7 @@ import {AuthenticationService} from '../../_services/authentication.service';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent {
 
   signUpUserModel = new Register('', '', '', '');
   hide = true;
@@ -24,9 +24,6 @@ export class SignUpComponent implements OnInit {
 
   openSignIn(): void {
     this.router.navigate(['login']);
-  }
-
-  ngOnInit(): void {
   }
 
 }

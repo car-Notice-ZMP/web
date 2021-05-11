@@ -7,14 +7,14 @@
   <span class="small-spacer"></span>
   <span><button mat-raised-button color="accent" (click)="logOut()">Wyloguj się</button></span>
 </mat-toolbar>
-<body class="mat-app-background" fxFill fxLayoutAlign="center">
+<body class="mat-app-background" fxFlexFill fxLayoutAlign="center">
 
-<div fxLayout="column" fxFlex="70" fxLayoutGap="30px" >
+<div fxLayout="column" fxFlex="60" fxLayoutGap="50px" >
   <div fxLayoutAlign="center">
     <img alt="zdjęcie" class="imageLimiter" src={{card.image_url}}>
   </div>
   <div fxLayoutAlign="center"><h1>{{card.title}}</h1></div>
-  <div fxLayout="row" fxFlex="50" fxLayoutGap="30vw">
+  <div fxLayout="row" fxFlex="45" fxLayoutGap="30vw">
     <div fxLayout="column">
       <h4>Ogłoszenie wystawił: {{card.notice_author}}</h4>
       <h4>Kontakt email: {{card.notice_author_email}}</h4>

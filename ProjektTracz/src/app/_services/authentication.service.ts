@@ -43,18 +43,6 @@ export class AuthenticationService {
 
   }
 
-  QuietlySignUp(user: Register): Subscription {
-    return this.userService.register(user).subscribe(
-      response => {
-        localStorage.setItem('token', response.token);
-      },
-      error => {
-        console.log('Error:', error.status, error.statusText);
-      }
-    );
-
-  }
-
   SignIn(user: Login): Subscription {
     return this.userService.login(user).subscribe(
       response => {
@@ -83,32 +71,20 @@ export class AuthenticationService {
     );
   }
 
-  // tslint:disable-next-line:typedef
-  loggedIn() {
+  loggedIn(): any {
+    localStorage.setItem('isLoggedIn', 'true');
     return !!localStorage.getItem('token');
   }
 
-  // tslint:disable-next-line:typedef
-  getToken() {
+
+  getToken(): any {
     return localStorage.getItem('token');
   }
 
-  setUser(user: User): void {
-    this.userSource.next(user);
-  }
-
-  // tslint:disable-next-line:typedef
-  getUserInfo(user: User) {
+  getUserInfo(): any {
     return this.userService.getUser().subscribe(
       res => {
-        // @ts-ignore
-        localStorage.setItem('name', res.message.name);
-        // @ts-ignore
-        localStorage.setItem('email', res.message.email);
-        // @ts-ignore
-        localStorage.setItem('email_verified_at', res.message.email_verified_at);
-        // @ts-ignore
-        localStorage.setItem('avatar', res.message.avatar);
+        this.setUser(res);
       },
       err => {
         console.log(err);
@@ -116,13 +92,12 @@ export class AuthenticationService {
     );
   }
 
+  setUser(user: User): void {
+    this.userSource.next(user);
+  }
+
   logOut(): void {
     localStorage.removeItem('token');
-    localStorage.removeItem('refreshed');
-    localStorage.removeItem('name');
-    localStorage.removeItem('email');
-    localStorage.removeItem('email_verified_at');
-    localStorage.removeItem('avatar');
     this.router.navigate(['h']);
   }
 }

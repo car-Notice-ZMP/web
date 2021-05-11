@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {NoticeService} from './notice.service';
 import {Notice} from '../shared/_models/Notice';
 import {Router} from '@angular/router';

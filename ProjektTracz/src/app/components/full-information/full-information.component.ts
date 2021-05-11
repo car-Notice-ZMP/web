@@ -7,7 +7,6 @@ import {AuthenticationService} from '../../_services/authentication.service';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {SnackBar} from '../../_helpers/snackbar.helper';
-import {User} from '../../shared/_models/User';
 
 @Component({
   selector: 'app-full-information',
@@ -29,7 +28,6 @@ export class FullInformationComponent implements OnInit, OnDestroy {
     [],
     '',
     '');
-  user = new User('', '', '', '');
   content: string;
   noticeArray: Array<ResponseNotice>;
   noticeSubscription: Subscription;
