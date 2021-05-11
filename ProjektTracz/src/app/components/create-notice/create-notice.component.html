@@ -5,12 +5,12 @@
   <span class="small-spacer"></span>
   <span><button mat-raised-button color="accent" (click)="logOut()">Wyloguj się</button></span>
 </mat-toolbar>
-<body class="mat-app-background" fxLayoutAlign="center center">
-<div fxLayout="column" fxLayoutGap="2%" fxLayoutAlign="center center" fxFlex="100">
+<body class="mat-app-background" fxLayoutAlign="center center" >
+<div fxLayout="column" fxLayoutGap="2%" fxLayoutAlign="center center">
   <h2>Dodaj ogłoszenie! </h2>
   <br>
-  <div fxLayout="row" fxLayoutAlign="left wrap">
-    <div fxLayout="column" fxLayoutGap="5%" fxLayoutAlign="left center">
+  <div fxLayout="row" fxLayoutAlign="center wrap">
+    <div fxLayout="column" fxLayoutGap="5%" fxLayoutAlign="center center">
       <mat-form-field appearance="fill">
         <mat-label>Tytuł ogłoszenia</mat-label>
         <input required matInput [(ngModel)]="noticeModel.title">
@@ -39,21 +39,6 @@
         <mat-label>Rocznik</mat-label>
         <input matInput [(ngModel)]="noticeModel.year">
       </mat-form-field>
-        <!--<input type="file" class="file-input"
-               [accept]="requiredFileType"
-               (change)="onFileSelected($event)" #fileUpload>
-
-        <div class="file-upload">
-
-          {{fileName || "No file uploaded yet."}}
-
-          <button mat-mini-fab color="primary" class="upload-btn"
-                  (click)="fileUpload.click()">
-            <mat-icon>attach_file</mat-icon>
-
-          </button>
-
-        </div>-->
       <mat-form-field appearance="fill" class="padding-fix">
         <mat-label>Cena</mat-label>
         <input matInput [(ngModel)]="noticeModel.price">
@@ -62,6 +47,16 @@
         <mat-label>Dodatkowe informacje</mat-label>
         <textarea matInput [(ngModel)]="noticeModel.message"></textarea>
       </mat-form-field>
+      <form [formGroup]="uploadForm">
+        <div class="preview" *ngIf="imgFile" fxLayoutGap="250px" >
+          <img [src]="imgFile" style="width:400px; height:250px">
+        </div>
+
+      <div class="form-group">
+        <label for="file">File</label>
+        <input type="file" class="form-control" id="file" formControlName="file" (change)="onImageChange($event)">
+      </div>
+      </form>
       <div fxLayoutGap="10%" fxLayout="column">
         <button fxFill mat-raised-button (click)="storeNotice()" type="submit">Wyślij ogłoszenie</button>
       </div>
@@ -69,79 +64,4 @@
   </div>
 </div>
 </body>
-
-  <!--<div fxLayout="row" fxLayoutGap="5%">
-    <div fxLayout="column" fxLayoutGap="5%" fxLayoutAlign="left center">
-      <mat-form-field appearance="fill">
-        <mat-label>Tytuł ogłoszenia</mat-label>
-        <input required matInput [(ngModel)]="noticeModel.title">
-        <button matSuffix mat-icon-button disabled></button>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Dodatkowe informacje</mat-label>
-        <input matInput [(ngModel)]="noticeModel.content">
-        <button matSuffix mat-icon-button disabled></button>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Marka</mat-label>
-        <input matInput [(ngModel)]="noticeModel.mark">
-        <button matSuffix mat-icon-button disabled></button>
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="padding-fix">
-        <mat-label>Model</mat-label>
-        <input matInput [(ngModel)]="noticeModel.model">
-        <button matSuffix mat-icon-button disabled></button>
-      </mat-form-field>
-      <mat-form-field appearance="fill" >
-        <mat-label>Kolor pojazdu</mat-label>
-        <input matInput [(ngModel)]="noticeModel.color">
-        <button matSuffix mat-icon-button disabled></button>
-      </mat-form-field>
-      <div fxLayoutGap="10%" fxLayout="column">
-        <button fxFill mat-raised-button (click)="storeNotice()" type="submit">Wyślij ogłoszenie</button>
-      </div>
-    </div>
-    <div fxLayout="column" fxLayoutGap="5%" fxLayoutAlign="right center">
-      <mat-form-field appearance="fill">
-        <mat-label>Typ Nadwozia</mat-label>
-        <input matInput [(ngModel)]="noticeModel.body">
-        <button matSuffix mat-icon-button disabled></button>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Przebieg</mat-label>
-        <input matInput [(ngModel)]="noticeModel.mileage">
-        <button matSuffix mat-icon-button disabled></button>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Rocznik</mat-label>
-        <input matInput [(ngModel)]="noticeModel.year">
-        <button matSuffix mat-icon-button disabled></button>
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="padding-fix">
-        <mat-label>Cena</mat-label>
-        <input matInput [(ngModel)]="noticeModel.price">
-        <button matSuffix mat-icon-button disabled></button>
-      </mat-form-field>
-      <mat-form-field>
-        <div>
-          <mat-toolbar>
-            <input matInput [(ngModel)]="fileAttr" readonly name="name" />
-            <button mat-raised-button color="primary">
-              Zdjęcie
-            </button>
-          </mat-toolbar>
-          <input type="file"
-                 #fileInput id="uploadFile"
-                 (change)="uploadFileEvt($event)"
-                 name="uploadFile"
-                 multiple="multiple"
-                 accept="image/*" />
-        </div>
-      </mat-form-field>
-      <div fxLayoutGap="10%" fxLayout="column" >
-        <button mat-raised-button (click)="close()">Wróć</button>
-      </div>
-    </div>
-  </div>-->
-
 

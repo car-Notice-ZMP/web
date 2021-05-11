@@ -1,12 +1,10 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Notice} from '../../shared/_models/Notice';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {NoticeService} from '../../_services/notice.service';
 import {Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Subscription} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {finalize} from 'rxjs/operators';
+import {UserService} from '../../_services/user.service';
 
 @Component({
   selector: 'app-create-category',
@@ -15,13 +13,10 @@ import {finalize} from 'rxjs/operators';
 })
 export class CreateNoticeComponent {
   @ViewChild('fileInput') fileInput: ElementRef;
-  @Input()
-  requiredFileType: string;
-
-  fileName = '';
-  uploadProgress: number;
-  uploadSub: Subscription;
-
+  imgFile: string;
+  userID: string;
+  token: string;
+  user: string;
   noticeModel = new Notice(
     '',
     '',
@@ -33,17 +28,32 @@ export class CreateNoticeComponent {
     '',
     '',
     '');
-  /*uploadForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
+  uploadForm = new FormGroup({
     file: new FormControl('', [Validators.required]),
     imgSrc: new FormControl('', [Validators.required]),
-  });*/
+  });
+
   constructor(private authenticationService: AuthenticationService,
               private noticeService: NoticeService,
-              private router: Router) {
+              private fb: FormBuilder,
+              private router: Router,
+              private userService: UserService) {
+    this.authenticationService.getUserInfo();
+
+    this.token = localStorage.getItem('token');
+    console.log(this.token);
+    this.userService.getUser();
+    this.authenticationService.userObservable.subscribe(
+      user => {
+        this.user = user.name;
+      });
   }
 
   storeNotice(): void {
+    console.log(this.noticeModel);
+    if (this.noticeModel.image === ''){
+      this.noticeModel.image = undefined;
+    }
     localStorage.getItem('token');
     this.noticeService.storeNotice(this.noticeModel).subscribe(
       res => {
@@ -53,37 +63,27 @@ export class CreateNoticeComponent {
     );
   }
 
-  // tslint:disable-next-line:typedef
-  /*onFileSelected(event) {
-    const file: File = event.target.files[0];
+  get uf(): any {
+    return this.uploadForm.controls;
+  }
 
-    if (file) {
-      this.fileName = file.name;
-      const formData = new FormData();
-      this.noticeModel.image = formData.append('thumbnail', file);
-      console.log(this.noticeModel.image);
-      const upload$ = this.http.post('https://citygame.ga/api/notices/store', this.noticeModel.image, {
-        reportProgress: true,
-        observe: 'events'
-      })
-        .pipe(
-          finalize(() => this.reset())
-        );
+  onImageChange(e): any {
+    const reader = new FileReader();
+
+    if (e.target.files && e.target.files.length) {
+      const [file] = e.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.imgFile = reader.result as string;
+        this.uploadForm.patchValue({
+          imgSrc: reader.result
+        });
+        console.log(this.uploadForm);
+        this.noticeModel.image = JSON.stringify(this.uploadForm.value);
+      };
     }
-  }*/
-
-  // tslint:disable-next-line:typedef
-  cancelUpload() {
-    this.uploadSub.unsubscribe();
-    this.reset();
   }
-
-  // tslint:disable-next-line:typedef
-  reset() {
-    this.uploadProgress = null;
-    this.uploadSub = null;
-  }
-
 
   logOut(): void {
     this.authenticationService.logOut();

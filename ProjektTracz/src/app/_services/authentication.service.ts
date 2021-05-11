@@ -72,7 +72,6 @@ export class AuthenticationService {
   }
 
   loggedIn(): any {
-    localStorage.setItem('isLoggedIn', 'true');
     return !!localStorage.getItem('token');
   }
 

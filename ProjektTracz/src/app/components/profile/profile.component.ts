@@ -45,8 +45,9 @@ export class ProfileComponent {
               private userService: UserService) {
     this.user = localStorage.getItem('name');
     this.authenticationService.getUserInfo();
-    this.token = localStorage.getItem('token');
 
+    this.token = localStorage.getItem('token');
+    console.log(this.token);
     this.userService.getUser();
     this.authenticationService.userObservable.subscribe(
       user => {
