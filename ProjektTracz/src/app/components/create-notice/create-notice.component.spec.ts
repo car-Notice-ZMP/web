@@ -7,6 +7,7 @@ import {MaterialModule} from '../../material.module';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthenticationService} from '../../_services/authentication.service';
 import {UserService} from '../../_services/user.service';
+import {FormBuilder} from '@angular/forms';
 
 describe('CreateCategoryComponent', () => {
   let component: CreateNoticeComponent;
@@ -16,7 +17,7 @@ describe('CreateCategoryComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [CreateNoticeComponent],
       imports: [RouterTestingModule, BrowserAnimationsModule, MaterialModule, HttpClientModule],
-      providers: [AuthenticationService, UserService]
+      providers: [AuthenticationService, UserService, FormBuilder]
     })
     .compileComponents();
   });
